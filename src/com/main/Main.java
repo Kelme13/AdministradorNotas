@@ -10,6 +10,7 @@ import com.event.EventMenuSelected;
 import com.event.EventShowPopupMenu;
 import com.form.Form1;
 import com.form.Form_Home;
+import com.form.Form_TodasClases;
 import com.form.MainForm;
 import com.roles.Rol;
 import com.roles.Usuario;
@@ -65,12 +66,7 @@ public class Main extends javax.swing.JFrame {
             public void menuSelected(int menuIndex, int subMenuIndex) {
                 System.out.println("MenukIndex " + menuIndex + " SubMenuIndex " + subMenuIndex);
                 if(menuIndex == 0) {
-                    if(subMenuIndex == 0) {
-                        main.showForm(new Form_Home());
-                    }
-                    else if(subMenuIndex == 1) {
-                        main.showForm(new Form1());
-                    }
+                    main.showForm(new Form_TodasClases());
                 }
             }
         });
