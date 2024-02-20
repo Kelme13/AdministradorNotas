@@ -6,12 +6,15 @@ package com.main;
 
 import com.component.Header;
 import com.component.Menu;
+import com.event.EventClasesVisualizar;
 import com.event.EventMenuSelected;
 import com.event.EventShowPopupMenu;
 import com.form.Form1;
 import com.form.Form_Home;
 import com.form.Form_TodasClases;
+import com.form.Form_VistaTablaSecciones;
 import com.form.MainForm;
+import com.model.ModelClass;
 import com.roles.Rol;
 import com.roles.Usuario;
 import com.swing.MenuItem;
@@ -32,6 +35,27 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
  */
 public class Main extends javax.swing.JFrame {
 
+    /**
+     * @param eventSecciones the eventShowSecciones to set
+     */
+    public void setEventSecciones(EventClasesVisualizar eventSecciones) {
+        this.eventShowSecciones = eventSecciones;
+    }
+
+    /**
+     * @return the eventShowSecciones
+     */
+    public EventClasesVisualizar getEventSecciones() {
+        return eventShowSecciones;
+    }
+
+    /**
+     * @param eventSecciones the eventShowSecciones to set
+     */
+    public void addEventSecciones(EventClasesVisualizar eventSecciones) {
+        this.setEventSecciones(eventSecciones);
+    }
+
     private MigLayout layout;
     private Menu menu;
     private Header header;
@@ -40,6 +64,8 @@ public class Main extends javax.swing.JFrame {
     
     private Usuario usuario;
     
+    
+    private EventClasesVisualizar eventShowSecciones;
     // Para usuario
     
     public Main() {
@@ -49,7 +75,21 @@ public class Main extends javax.swing.JFrame {
         usuario = new Usuario("012310", "Kelvinme", "asdfasdf", 
                 new Rol(Rol.Tipo.COORDINADOR));
         
+        
         init();
+    }
+    
+    
+    void initEventVisualizarSecciones() {
+        
+        this.setEventSecciones(new EventClasesVisualizar() {
+            @Override
+            public void visualizar(ModelClass clase) {
+                System.out.println("Mostrando Secciones");
+                main.showForm(new Form_VistaTablaSecciones(clase));
+            }
+        });
+        
     }
 
     private void init() {
@@ -64,12 +104,19 @@ public class Main extends javax.swing.JFrame {
         menu.addEvent(new EventMenuSelected() {
             @Override
             public void menuSelected(int menuIndex, int subMenuIndex) {
+                
                 System.out.println("MenukIndex " + menuIndex + " SubMenuIndex " + subMenuIndex);
+                
+                
                 if(menuIndex == 0) {
-                    main.showForm(new Form_TodasClases());
+                    main.showForm(new Form_TodasClases(eventShowSecciones));
                 }
             }
         });
+        
+        
+        
+        
         
         menu.addEventShowPopup(new EventShowPopupMenu() {
             @Override
@@ -130,6 +177,8 @@ public class Main extends javax.swing.JFrame {
         });
         
         IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());
+        
+        initEventVisualizarSecciones();
         
         main.showForm(new Form_Home());
     }

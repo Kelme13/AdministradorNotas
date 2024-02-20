@@ -53,9 +53,24 @@ public class Table extends JTable{
                     
                     return cell;
                 }
-                else if(value instanceof ModelAction) {
+                else if(value instanceof ModelAction ) {
                     ModelAction data = (ModelAction) value;
                     Action cell = new Action(data);
+                    
+                    if(isSelected) {
+                        cell.setBackground(new Color(239, 244, 255));
+                    }
+                    else {
+                        cell.setBackground(Color.WHITE);
+                    }
+                    
+                    return cell;
+                    
+                }
+                else if(value instanceof ModelActionClases) {
+                    ModelActionClases data = (ModelActionClases) value;
+                    Action cell = new Action(data);
+                    
                     
                     if(isSelected) {
                         cell.setBackground(new Color(239, 244, 255));

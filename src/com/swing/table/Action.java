@@ -4,6 +4,8 @@
  */
 package com.swing.table;
 
+import com.swing.icon.GoogleMaterialDesignIcons;
+import com.swing.icon.IconFontSwing;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -20,6 +22,11 @@ public class Action extends javax.swing.JPanel {
      */
     public Action(ModelAction data) {
         initComponents();
+        
+        cmdSecciones.setIcon(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.APPS,
+                20, new Color(33, 105, 249), new Color(93, 58, 196)));
+        
+        
         cmdEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -32,6 +39,38 @@ public class Action extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 data.getEvent().delete(data.getStudent());
+            }
+                
+        });
+    }
+    
+     public Action(ModelActionClases data) {
+        initComponents();
+        
+        
+        cmdSecciones.setIcon(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.APPS,
+                20, new Color(243, 255, 139), new Color( 188, 206, 35)));
+        
+        cmdEdit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                data.getEvent().update(data.getClase());
+            }
+                
+        });
+        
+        cmdDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                data.getEvent().delete(data.getClase());
+            }
+                
+        });
+        
+        cmdSecciones.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                data.getEvent().secciones(data.getClase());
             }
                 
         });
@@ -58,6 +97,7 @@ public class Action extends javax.swing.JPanel {
 
         cmdDelete = new com.raven.swing.Button();
         cmdEdit = new com.raven.swing.Button();
+        cmdSecciones = new com.raven.swing.Button();
 
         cmdDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/icon/delete.png"))); // NOI18N
         cmdDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -73,6 +113,13 @@ public class Action extends javax.swing.JPanel {
             }
         });
 
+        cmdSecciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/icon/delete.png"))); // NOI18N
+        cmdSecciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdSeccionesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,8 +127,10 @@ public class Action extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(cmdEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cmdDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cmdSecciones, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -90,7 +139,8 @@ public class Action extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cmdEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmdDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cmdDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmdSecciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -103,9 +153,14 @@ public class Action extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmdEditActionPerformed
 
+    private void cmdSeccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSeccionesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmdSeccionesActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.raven.swing.Button cmdDelete;
     private com.raven.swing.Button cmdEdit;
+    private com.raven.swing.Button cmdSecciones;
     // End of variables declaration//GEN-END:variables
 }

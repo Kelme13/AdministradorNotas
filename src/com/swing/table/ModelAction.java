@@ -1,6 +1,7 @@
 
 package com.swing.table;
 
+import com.model.ModelClass;
 import com.model.ModelStudent;
 
 /**
@@ -47,8 +48,5 @@ public class ModelAction {
         this.student = student;
         this.event = event;
     }
-    
-    
-        
     
 }

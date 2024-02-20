@@ -1,5 +1,6 @@
 package com.component;
 
+import com.event.EventClasesVisualizar;
 import com.event.EventMenu;
 import com.event.EventMenuSelected;
 import com.event.EventShowPopupMenu;
@@ -44,6 +45,7 @@ public class Menu extends javax.swing.JPanel {
         this.eventShowPopup = eventShowPopup;
     }
 
+ 
     /**
      * @return the showMenu
      */
