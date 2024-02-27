@@ -8,7 +8,7 @@ public class Form_VistaSeccion extends javax.swing.JPanel {
     public Form_VistaSeccion() {
         initComponents();
     }
-    // olas
+    // olas Tu papa
 
     private ModelSeccion seccion;
     
