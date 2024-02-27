@@ -16,13 +16,6 @@ import javax.swing.Icon;
  * @author kelvi
  */
 public class Form_TodasClases extends javax.swing.JPanel {
-
-    /**
-     * Creates new form Form_TodasClases
-     */
-    
-    
-    
     
     private EventClasesVisualizar eventShowSecciones;
     
@@ -33,18 +26,12 @@ public class Form_TodasClases extends javax.swing.JPanel {
         btnAgregar.setIcon(icon);
         
         this.eventShowSecciones = event;
+        
+                
+        table1.fixTable(jScrollPane1);
         initTableClases();
         
         setOpaque(false);
-    }
-    
-    private EventClasesVisualizar getEvent() {
-        return new EventClasesVisualizar() {
-            @Override
-            public void visualizar(ModelClass clase) {
-                
-            }
-        };
     }
     
     private void initTableClases() {     
@@ -80,6 +67,22 @@ public class Form_TodasClases extends javax.swing.JPanel {
         table1.addRow(new ModelClass("CCC303", "Teoria de Base de Datos I", "I-01", 4).toRowTable(eventAction));
         table1.addRow(new ModelClass("CCC304", "Teoria de Base de Datos  II", "I-01", 4).toRowTable(eventAction));
         table1.addRow(new ModelClass("CCC307", "Experiencia de Usuario", "I-01", 4).toRowTable(eventAction));
+        table1.addRow(new ModelClass("CCC303", "Teoria de Base de Datos I", "I-01", 4).toRowTable(eventAction));
+        table1.addRow(new ModelClass("CCC304", "Teoria de Base de Datos  II", "I-01", 4).toRowTable(eventAction));
+        table1.addRow(new ModelClass("CCC307", "Experiencia de Usuario", "I-01", 4).toRowTable(eventAction));
+        table1.addRow(new ModelClass("CCC303", "Teoria de Base de Datos I", "I-01", 4).toRowTable(eventAction));
+        table1.addRow(new ModelClass("CCC304", "Teoria de Base de Datos  II", "I-01", 4).toRowTable(eventAction));
+        table1.addRow(new ModelClass("CCC307", "Experiencia de Usuario", "I-01", 4).toRowTable(eventAction));
+        table1.addRow(new ModelClass("CCC303", "Teoria de Base de Datos I", "I-01", 4).toRowTable(eventAction));
+        table1.addRow(new ModelClass("CCC304", "Teoria de Base de Datos  II", "I-01", 4).toRowTable(eventAction));
+        table1.addRow(new ModelClass("CCC307", "Experiencia de Usuario", "I-01", 4).toRowTable(eventAction));
+        table1.addRow(new ModelClass("CCC303", "Teoria de Base de Datos I", "I-01", 4).toRowTable(eventAction));
+        table1.addRow(new ModelClass("CCC304", "Teoria de Base de Datos  II", "I-01", 4).toRowTable(eventAction));
+        table1.addRow(new ModelClass("CCC307", "Experiencia de Usuario", "I-01", 4).toRowTable(eventAction));
+        table1.addRow(new ModelClass("CCC303", "Teoria de Base de Datos I", "I-01", 4).toRowTable(eventAction));
+        table1.addRow(new ModelClass("CCC304", "Teoria de Base de Datos  II", "I-01", 4).toRowTable(eventAction));
+        table1.addRow(new ModelClass("CCC307", "Experiencia de Usuario", "I-01", 4).toRowTable(eventAction));
+        
     }
 
     private boolean showMessage(String message) {
@@ -102,6 +105,8 @@ public class Form_TodasClases extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 51, 255));
         jLabel1.setText("Clases / Todas");
+
+        pane.setBackground(new java.awt.Color(255, 255, 255));
 
         jScrollPane1.setBorder(null);
 
@@ -163,7 +168,7 @@ public class Form_TodasClases extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
+                .addGap(5, 5, 5)
                 .addComponent(pane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents

@@ -1,4 +1,3 @@
-
 package com.model;
 
 import com.swing.icon.GoogleMaterialDesignIcons;
@@ -15,6 +14,59 @@ import javax.swing.Icon;
  */
 public class ModelClass {
 
+    public static Color generarColor() {
+        
+        Color c = Color.BLACK;
+        
+        int n = ramdon();
+        
+        switch (n) {
+            case 1:
+                c = Color.RED;
+                break;
+
+            case 2:
+                c = Color.BLACK;
+                break;
+
+            case 3:
+                c = Color.BLUE;
+                break;
+
+            case 4:
+                c = Color.GRAY;
+                break;
+
+            case 5:
+                c = Color.GREEN;
+                break;
+
+            case 6:
+                c = Color.ORANGE;
+                break;
+
+            case 7:
+                c = Color.MAGENTA;
+                break;
+
+            case 8:
+                c = Color.CYAN;
+                break;
+
+            case 9:
+                c = Color.PINK;
+                break;
+
+            case 10:
+                c = Color.YELLOW;
+                break;
+        }
+        
+        return c;
+    }
+    public static  int ramdon() {
+        return (int) (Math.random() * 10 + 1);
+    }
     /**
      * @return the codigo
      */
@@ -80,18 +132,19 @@ public class ModelClass {
         this.programa = programa;
         this.creditos = creditos;
     }
-    
-    public Object[]toRowTable(EventActionClases event) {
-        Icon icon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.CLASS, 60, Color.RED, Color.ORANGE);
-        
-        return new Object[] {new ModelProfile(icon, codigo),nombre,  programa, creditos,
-               new ModelActionClases(this, event)};
-        
+
+    public Object[] toRowTable(EventActionClases event) {
+        Icon icon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.CLASS, 60,
+                generarColor(), generarColor());
+
+        return new Object[]{new ModelProfile(icon, codigo), nombre, programa, creditos,
+            new ModelActionClases(this, event)};
+
     }
-    
+
     private String codigo;
     private String nombre;
     private String programa;
     private int creditos;
-    
+
 }

@@ -34,7 +34,7 @@
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <Component id="btnAgregar" min="-2" pref="60" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
               <Component id="pane" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -53,6 +53,11 @@
       </Properties>
     </Component>
     <Container class="javax.swing.JPanel" name="pane">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
+      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">

@@ -176,7 +176,7 @@ public class Form_Home extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(noticeBoard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(noticeBoard, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -190,7 +190,7 @@ public class Form_Home extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Nombre", "Genero", "No. Cuenta", "Carrera", "Acciones"
+                "Nombre", "No. Cuenta", "Genero", "Carrera", "Acciones"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -203,7 +203,7 @@ public class Form_Home extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(table1);
         if (table1.getColumnModel().getColumnCount() > 0) {
-            table1.getColumnModel().getColumn(0).setPreferredWidth(150);
+            table1.getColumnModel().getColumn(4).setPreferredWidth(100);
         }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -213,10 +213,10 @@ public class Form_Home extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel5)
-                        .addGap(0, 378, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -225,7 +225,7 @@ public class Form_Home extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

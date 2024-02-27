@@ -18,7 +18,8 @@ import javax.swing.table.TableCellEditor;
  * @author elote
  */
 public class Table extends JTable{
-
+    
+    
     public Table() {
         
         setShowHorizontalLines(true);

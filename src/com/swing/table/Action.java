@@ -23,7 +23,7 @@ public class Action extends javax.swing.JPanel {
     public Action(ModelAction data) {
         initComponents();
         
-        cmdSecciones.setIcon(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.APPS,
+        cmdVisualizar.setIcon(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.APPS,
                 20, new Color(33, 105, 249), new Color(93, 58, 196)));
         
         
@@ -44,11 +44,11 @@ public class Action extends javax.swing.JPanel {
         });
     }
     
-     public Action(ModelActionClases data) {
+    public Action(ModelActionClases data) {
         initComponents();
         
         
-        cmdSecciones.setIcon(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.APPS,
+        cmdVisualizar.setIcon(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.APPS,
                 20, new Color(243, 255, 139), new Color( 188, 206, 35)));
         
         cmdEdit.addActionListener(new ActionListener() {
@@ -67,7 +67,7 @@ public class Action extends javax.swing.JPanel {
                 
         });
         
-        cmdSecciones.addActionListener(new ActionListener() {
+        cmdVisualizar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 data.getEvent().secciones(data.getClase());
@@ -75,7 +75,33 @@ public class Action extends javax.swing.JPanel {
                 
         });
     }
+    
+    public Action(ModelActionSeccion data) {
+        initComponents();
+        
+        
+        cmdVisualizar.setIcon(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.APPS,
+                20, new Color(243, 255, 139), new Color( 188, 206, 35)));
+        
+        cmdEdit.setVisible(false);
+        
+        cmdDelete.setVisible(false);
+        
+        
+        cmdVisualizar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                data.getEvent().verSeccion(data.getClase());
+            }
+                
+        });
+        
+        
+    }
 
+    public void disableDelete() {
+        this.cmdDelete.setVisible(false);
+    }
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); 
@@ -97,7 +123,7 @@ public class Action extends javax.swing.JPanel {
 
         cmdDelete = new com.raven.swing.Button();
         cmdEdit = new com.raven.swing.Button();
-        cmdSecciones = new com.raven.swing.Button();
+        cmdVisualizar = new com.raven.swing.Button();
 
         cmdDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/icon/delete.png"))); // NOI18N
         cmdDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -113,10 +139,10 @@ public class Action extends javax.swing.JPanel {
             }
         });
 
-        cmdSecciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/icon/delete.png"))); // NOI18N
-        cmdSecciones.addActionListener(new java.awt.event.ActionListener() {
+        cmdVisualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/icon/delete.png"))); // NOI18N
+        cmdVisualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdSeccionesActionPerformed(evt);
+                cmdVisualizarActionPerformed(evt);
             }
         });
 
@@ -130,8 +156,8 @@ public class Action extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cmdDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cmdSecciones, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(cmdVisualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(10, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,7 +166,7 @@ public class Action extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cmdEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cmdDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmdSecciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cmdVisualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -153,14 +179,14 @@ public class Action extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmdEditActionPerformed
 
-    private void cmdSeccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSeccionesActionPerformed
+    private void cmdVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdVisualizarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cmdSeccionesActionPerformed
+    }//GEN-LAST:event_cmdVisualizarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.raven.swing.Button cmdDelete;
     private com.raven.swing.Button cmdEdit;
-    private com.raven.swing.Button cmdSecciones;
+    private com.raven.swing.Button cmdVisualizar;
     // End of variables declaration//GEN-END:variables
 }

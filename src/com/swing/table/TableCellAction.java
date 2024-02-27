@@ -17,8 +17,9 @@ import javax.swing.JTextField;
  */
 public class TableCellAction extends DefaultCellEditor {
 
-    private ModelAction data;
-    private ModelActionClases dataC;
+    private ModelAction data = null;
+    private ModelActionClases dataC = null;
+    private ModelActionSeccion dataS = null;
 
     public TableCellAction() {
         super(new JCheckBox());
@@ -42,6 +43,13 @@ public class TableCellAction extends DefaultCellEditor {
             cell.setBackground(new Color(239, 244, 255));
             return cell;
 
+        } else if (value instanceof ModelActionSeccion) {
+            
+            dataS = (ModelActionSeccion) value;
+            Action cell = new Action(dataS);
+            
+            cell.setBackground(new Color(239, 244, 255));
+            return cell;
         }
         
         return (Component)value;
@@ -51,7 +59,12 @@ public class TableCellAction extends DefaultCellEditor {
 
     @Override
     public Object getCellEditorValue() {
-        return data;
+        if(data != null)
+            return data;
+        else if(dataC != null)
+            return dataC;
+        else
+            return dataS;
     }
 
 }

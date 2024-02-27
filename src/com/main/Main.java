@@ -8,6 +8,7 @@ import com.component.Header;
 import com.component.Menu;
 import com.event.EventClasesVisualizar;
 import com.event.EventMenuSelected;
+import com.event.EventSeccionVisualizar;
 import com.event.EventShowPopupMenu;
 import com.form.Form1;
 import com.form.Form_Home;
@@ -66,6 +67,7 @@ public class Main extends javax.swing.JFrame {
     
     
     private EventClasesVisualizar eventShowSecciones;
+    private EventSeccionVisualizar eventVisualizarSeccion;
     // Para usuario
     
     public Main() {
@@ -86,7 +88,7 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void visualizar(ModelClass clase) {
                 System.out.println("Mostrando Secciones");
-                main.showForm(new Form_VistaTablaSecciones(clase));
+                main.showForm(new Form_VistaTablaSecciones(clase, eventVisualizarSeccion));
             }
         });
         

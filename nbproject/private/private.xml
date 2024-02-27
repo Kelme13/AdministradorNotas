@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/elote/Documents/ProyectosClases/AdministradorNotas/src/com/swing/table/Table.java</file>
-            <file>file:/home/elote/Documents/ProyectosClases/AdministradorNotas/src/com/model/ModelClass.java</file>
-            <file>file:/home/elote/Documents/ProyectosClases/AdministradorNotas/src/com/form/Form_TodasClases.java</file>
+            <file>file:/home/elote/Documents/ProyectosClases/AdministradorNotas/src/com/form/Form_VistaSeccion.java</file>
+            <file>file:/home/elote/Documents/ProyectosClases/AdministradorNotas/src/com/swing/table/ModelActionSeccion.java</file>
+            <file>file:/home/elote/Documents/ProyectosClases/AdministradorNotas/src/com/form/Form_VistaClase.java</file>
             <file>file:/home/elote/Documents/ProyectosClases/AdministradorNotas/src/com/form/Form_VistaTablaSecciones.java</file>
-            <file>file:/home/elote/Documents/ProyectosClases/AdministradorNotas/src/com/swing/combobox/Combobox.java</file>
         </group>
     </open-files>
 </project-private>
