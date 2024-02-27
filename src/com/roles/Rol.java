@@ -59,7 +59,7 @@ public class Rol {
                     getItemsMenu()[0] = new ModelMenu(new ImageIcon(getClass().getResource("/com/icon/7.png")),
                             "Clases");
                     getItemsMenu()[1] = new ModelMenu(new ImageIcon(getClass().getResource("/com/icon/6.png")),
-                            "Esudantes");
+                            "Estudiantes");
 
                     getItemsMenu()[2] = new ModelMenu(new ImageIcon(getClass().getResource("/com/icon/5.png")),
                             "Docentes");
