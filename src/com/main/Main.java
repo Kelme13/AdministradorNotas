@@ -1,30 +1,42 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package com.main;
 
+
+import javax.swing.Icon;
 import com.component.Header;
 import com.component.Menu;
+import com.dialogs.MessageInput;
 import com.event.EventClasesVisualizar;
 import com.event.EventMenuSelected;
 import com.event.EventSeccionVisualizar;
 import com.event.EventShowPopupMenu;
 import com.form.Form1;
+import com.form.Form_Clase;
 import com.form.Form_Home;
 import com.form.Form_TodasClases;
+import com.form.Form_VistaClase;
+import com.form.Form_VistaSeccion;
 import com.form.Form_VistaTablaSecciones;
 import com.form.MainForm;
 import com.model.ModelClass;
+import com.model.ModelMenu;
+import com.model.ModelSeccion;
+import com.model.ModelStudent;
 import com.roles.Rol;
+import static com.roles.Rol.Tipo.COORDINADOR;
+import static com.roles.Rol.Tipo.DOCENTE;
+import static com.roles.Rol.Tipo.ESTUDIANTE;
 import com.roles.Usuario;
 import com.swing.MenuItem;
 import com.swing.PopupMenu;
 import com.swing.icon.GoogleMaterialDesignIcons;
 import com.swing.icon.IconFontSwing;
+import com.swing.table.EventAction;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
@@ -62,64 +74,130 @@ public class Main extends javax.swing.JFrame {
     private Header header;
     private MainForm main;
     private Animator animator;
-    
+
     private Usuario usuario;
-    
-    
+
     private EventClasesVisualizar eventShowSecciones;
     private EventSeccionVisualizar eventVisualizarSeccion;
-    // Para usuario
-    
+    private EventAction eventStudent;
+
     public Main() {
-        
+
         initComponents();
+
+        Icon icon = new javax.swing.ImageIcon(getClass().getResource("/com/icon/profile2.jpg"));
         
-        usuario = new Usuario("012310", "Kelvinme", "asdfasdf", 
-                new Rol(Rol.Tipo.COORDINADOR));
-        
-        
+        usuario = new Usuario(icon, "012310", "Kelvinme", "asdfasdf",
+                new Rol(Rol.Tipo.DOCENTE));
+
         init();
     }
-    
-    
-    void initEventVisualizarSecciones() {
+
+    private void initHeaderElements() {
+        header.setPic(usuario.getIcon());
+        header.setUserName(usuario.getUsuario());
+        header.setRol(usuario.getRol().toString());
+    }
+    private void initEventVisualizarSecciones() {
+
+        boolean editable = (usuario.getTipoRol() == Rol.Tipo.COORDINADOR);
         
         this.setEventSecciones(new EventClasesVisualizar() {
             @Override
             public void visualizar(ModelClass clase) {
-                System.out.println("Mostrando Secciones");
-                main.showForm(new Form_VistaTablaSecciones(clase, eventVisualizarSeccion));
+                main.showForm(new Form_VistaClase(clase, eventVisualizarSeccion, editable));
             }
         });
-        
+
     }
 
-    private void init() {
-        layout = new MigLayout("fill", "0[]0[100%, fill]0", "0[fill, top]0");
-        bg.setLayout(layout);
+    private void initEventVisualizarSeccion() {
+        
+        boolean editable = (usuario.getTipoRol() == Rol.Tipo.COORDINADOR);
+        
+        this.eventVisualizarSeccion = new EventSeccionVisualizar() {
+            @Override
+            public void visualizar(ModelSeccion seccion) {
+                main.showForm(new Form_VistaSeccion(seccion, eventStudent, editable));
+            }
+        };
+    }
+
+    private void initEventStudent() {
+        this.eventStudent = new EventAction() {
+            @Override
+            public void delete(ModelStudent student) {
+                System.out.println("Borrarrr " + student.getName());
+            }
+
+            @Override
+            public void update(ModelStudent student) {
+                MessageInput input = new MessageInput(Main.getFrames()[0], true);
+
+                input.showMessage("Ingrese la nota para [ " + student.getName()
+                        + " - " + student.getNoCuenta() + " ]");
+
+                if (input.isOk()) {
+                    System.out.println("Se va a actualizar la nota de");
+                }
+            }
+
+            @Override
+            public void visualizar(ModelStudent student) {
+
+                System.out.println("nomas ver xD " + student.getName());
+            }
+        };
+    }
+
+    private void initMenu() {
+
         menu = new Menu();
         menu.setItemsMenu(usuario.getRol().getItemsMenu());
-        
-        header = new Header();
+
         main = new MainForm();
-        
+
         menu.addEvent(new EventMenuSelected() {
             @Override
             public void menuSelected(int menuIndex, int subMenuIndex) {
-                
+
                 System.out.println("MenukIndex " + menuIndex + " SubMenuIndex " + subMenuIndex);
-                
-                
-                if(menuIndex == 0) {
-                    main.showForm(new Form_TodasClases(eventShowSecciones));
+
+                // Dependiendo del rol, el index cumple diferentes funciones
+                switch (usuario.getRol().getTp()) {
+                    case COORDINADOR -> {
+                        if (menuIndex == 0) {
+                            main.showForm(new Form_TodasClases(eventShowSecciones, true));
+                        }
+                    }
+                    case ESTUDIANTE -> {
+                        // Aqui seria crear un estudiante en base al usuario
+                        
+                        
+                        if(menuIndex == 1)
+                        {
+                            if(subMenuIndex == 0)
+                            {
+                                main.showForm(new Form_Clase(usuario.getId()));
+                            }
+                            else if(subMenuIndex == 1)
+                            {
+                                
+                            }
+                        }
+                    }
+                    case DOCENTE -> {
+                        if (menuIndex == 0) {
+                            main.showForm(new Form_TodasClases(eventShowSecciones, false));
+                        }
+                    }
+                    default -> {
+                    }
                 }
+
             }
         });
-        
-        
-        
-        
-        
+
         menu.addEventShowPopup(new EventShowPopupMenu() {
             @Override
             public void showPopup(Component com) {
@@ -129,62 +207,79 @@ public class Main extends javax.swing.JFrame {
                 int y = Main.this.getY() + com.getY() + 86;
                 popup.setLocation(x, y);
                 popup.setVisible(true);
-                
+
             }
-            
-            
+
         });
         menu.initMenuItem();
-        
-        bg.add(menu, "w 230!, spany 2");
-        bg.add(header, "h 50!, wrap");
-        bg.add(main, "w 100%, h 100%");
-        
+
+    }
+
+    private void initAnimationHeader() {
+
         TimingTarget target = new TimingTargetAdapter() {
             @Override
             public void timingEvent(float fraction) {
                 double width;
-                if(menu.isShowMenu()) {
+                if (menu.isShowMenu()) {
                     width = 60 + (170 * (1f - fraction));
-                }
-                else {
+                } else {
                     width = 60 + (170 * fraction);
                 }
                 layout.setComponentConstraints(menu, "w " + width + "!, spany2");
                 menu.revalidate();
             }
-            
+
             @Override
             public void end() {
                 menu.setShowMenu(!menu.isShowMenu());
             }
-            
+
         };
         animator = new Animator(500, target);
         animator.setResolution(0);
         animator.setDeceleration(0.5f);
         animator.setAcceleration(0.4f);
-        
+
         header.addMenuEvent(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!animator.isRunning()) {
+                if (!animator.isRunning()) {
                     animator.start();
                 }
                 //menu.setEnableMenu(false);
-                if(menu.isShowMenu()) {
+                if (menu.isShowMenu()) {
                     menu.hideAllMenu();
                 }
             }
         });
+    }
+
+    private void init() {
+        layout = new MigLayout("fill", "0[]0[100%, fill]0", "0[fill, top]0");
+        bg.setLayout(layout);
+
+        header = new Header();
+        initHeaderElements();
         
-        IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());
-        
+        initMenu();
+
+        bg.add(menu, "w 230!, spany 2");
+        bg.add(header, "h 50!, wrap");
+        bg.add(main, "w 100%, h 100%");
+
+        initAnimationHeader();
+
+        IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont()); // Para usar iconos de google en cualquier momento
+
+        // Eventos para ver las clases y secciones
         initEventVisualizarSecciones();
-        
+        initEventVisualizarSeccion();
+        initEventStudent();
+
         main.showForm(new Form_Home());
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
