@@ -19,18 +19,21 @@ public class Form_TodasClases extends javax.swing.JPanel {
     
     private EventClasesVisualizar eventShowSecciones;
     
-    public Form_TodasClases(EventClasesVisualizar event) {
+    private boolean editableClases;
+    
+    public Form_TodasClases(EventClasesVisualizar event, boolean editable) {
         initComponents();
         Icon icon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.LIBRARY_ADD, 40, Color.RED, Color.ORANGE);
         
         btnAgregar.setIcon(icon);
+        if(!editable)
+            btnAgregar.setVisible(false);
         
         this.eventShowSecciones = event;
-        
-                
         table1.fixTable(jScrollPane1);
-        initTableClases();
         
+        editableClases = editable;
+        initTableClases();
         setOpaque(false);
     }
     
@@ -59,29 +62,23 @@ public class Form_TodasClases extends javax.swing.JPanel {
             public void secciones(ModelClass clase) {
                  if (showMessage("Ver las secciones  de: " + clase.getNombre())) {
                     eventShowSecciones.visualizar(clase);
-                    
                 }
             }
         };
         
-        table1.addRow(new ModelClass("CCC303", "Teoria de Base de Datos I", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC304", "Teoria de Base de Datos  II", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC307", "Experiencia de Usuario", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC303", "Teoria de Base de Datos I", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC304", "Teoria de Base de Datos  II", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC307", "Experiencia de Usuario", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC303", "Teoria de Base de Datos I", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC304", "Teoria de Base de Datos  II", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC307", "Experiencia de Usuario", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC303", "Teoria de Base de Datos I", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC304", "Teoria de Base de Datos  II", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC307", "Experiencia de Usuario", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC303", "Teoria de Base de Datos I", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC304", "Teoria de Base de Datos  II", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC307", "Experiencia de Usuario", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC303", "Teoria de Base de Datos I", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC304", "Teoria de Base de Datos  II", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC307", "Experiencia de Usuario", "I-01", 4).toRowTable(eventAction));
+        table1.addRow(new ModelClass("CCC303", "Teoria de Base de Datos I", "I-01", 4).toRowTable(eventAction, editableClases));
+        table1.addRow(new ModelClass("CCC304", "Teoria de Base de Datos  II", "I-01", 4).toRowTable(eventAction, editableClases));
+        table1.addRow(new ModelClass("CCC307", "Experiencia de Usuario", "I-01", 4).toRowTable(eventAction, editableClases));
+        
+        table1.addRow(new ModelClass("CCC303", "Teoria de Base de Datos I", "I-01", 4).toRowTable(eventAction, editableClases));
+        table1.addRow(new ModelClass("CCC304", "Teoria de Base de Datos  II", "I-01", 4).toRowTable(eventAction, editableClases));
+        table1.addRow(new ModelClass("CCC307", "Experiencia de Usuario", "I-01", 4).toRowTable(eventAction, editableClases));
+        
+        
+        table1.addRow(new ModelClass("CCC303", "Teoria de Base de Datos I", "I-01", 4).toRowTable(eventAction, editableClases));
+        table1.addRow(new ModelClass("CCC304", "Teoria de Base de Datos  II", "I-01", 4).toRowTable(eventAction, editableClases));
+        table1.addRow(new ModelClass("CCC307", "Experiencia de Usuario", "I-01", 4).toRowTable(eventAction, editableClases));
+        
         
     }
 
