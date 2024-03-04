@@ -1,22 +1,65 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package com.form;
+
+import static com.model.ModelClass.generarColor;
+import com.model.ModelStudent;
+import com.swing.icon.GoogleMaterialDesignIcons;
+import com.swing.icon.IconFontSwing;
+import com.swing.table.ModelProfile;
+import javax.swing.Icon;
 
 /**
  *
  * @author kelvi
+ * 
+ * 
+ * Este form es para mostrar todas las clases de los estudiante en general
+ * Para ver sus notas de cada una
  */
 public class Form_Clase extends javax.swing.JPanel {
 
     /**
      * Creates new form Form_Clase
      */
-    public Form_Clase() {
-        initComponents();
+    
+    private String NoCuenta;
+    
+    private Object[] createdRow() {
+        Icon icon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.CLASS, 60,
+                generarColor(), generarColor());
+        
+        return new Object[]{new ModelProfile(icon, "CC201"), "Programacion I", 4, 98.3};
     }
-
+    
+    private void initTableClases() {
+        
+        table1.addRow(createdRow());
+        
+        table1.addRow(createdRow());
+        
+        table1.addRow(createdRow());
+        
+        table1.addRow(createdRow());
+        
+        table1.addRow(createdRow());
+        
+        table1.addRow(createdRow());
+        
+        table1.addRow(createdRow());
+    }
+    public Form_Clase(String NoCuenta) {
+        initComponents();
+        
+        this.NoCuenta = NoCuenta;
+        
+        table1.fixTable(jScrollPane1);
+        initTableClases();
+        
+        setOpaque(false);
+    }
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,19 +69,62 @@ public class Form_Clase extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table1 = new com.swing.table.Table();
+        lblDir = new javax.swing.JLabel();
+
+        jScrollPane1.setBorder(null);
+
+        table1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Codigo", "Nombre", "Creditos", "Nota"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(table1);
+
+        lblDir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblDir.setForeground(new java.awt.Color(102, 51, 255));
+        lblDir.setText("Clases / Todas las Clases");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 926, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblDir)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblDir)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblDir;
+    private com.swing.table.Table table1;
     // End of variables declaration//GEN-END:variables
 }
