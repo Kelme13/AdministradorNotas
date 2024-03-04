@@ -56,7 +56,7 @@ public class CardClass extends javax.swing.JPanel {
         lblPer = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        setMaximumSize(new java.awt.Dimension(310, 32767));
+        setMaximumSize(new java.awt.Dimension(310, 500));
         setName(""); // NOI18N
 
         lblTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
