@@ -41,7 +41,7 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
-
+import java.sql.*;
 /**
  *
  * @author kelvi
@@ -345,6 +345,20 @@ public class Main extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+         String url = "jdbc:sqlserver://Fabs;databaseName=PruebaDeCafe;trustServerCertificate=true;user=GrupoClases;password=Teoria1";
+        String username = "GrupoClases";
+        String password = "Teoria1";
+        System.out.println("Hola");
+        try (Connection connection = DriverManager.getConnection(url)) {
+            // Connection successful
+            System.out.println("Connected to the database.");
+            // You can execute SQL queries or perform database operations here
+        } catch (SQLException e) {
+            // Connection failed
+            System.err.println("Failed to connect to the database: " + e.getMessage());
+        }
+        System.out.println("Adios");
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Main().setVisible(true);
