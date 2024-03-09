@@ -5,7 +5,7 @@ package com.main;
 import javax.swing.Icon;
 import com.component.Header;
 import com.component.Menu;
-import com.dialogs.MessageInput;
+import com.dialogs.Message;
 import com.event.EventClasesVisualizar;
 import com.event.EventMenuSelected;
 import com.event.EventSeccionVisualizar;
@@ -87,25 +87,25 @@ public class Main extends javax.swing.JFrame {
 
         Icon icon = new javax.swing.ImageIcon(getClass().getResource("/com/icon/profile2.jpg"));
         
-        usuario = new Usuario(icon, "012310", "Kelvinme", "asdfasdf",
-                new Rol(Rol.Tipo.DOCENTE));
+        usuario = new Usuario( "012310", "Kelvinme", "asdfasdf", new Rol(Rol.Tipo.DOCENTE));
 
         init();
     }
 
     private void initHeaderElements() {
-        header.setPic(usuario.getIcon());
-        header.setUserName(usuario.getUsuario());
-        header.setRol(usuario.getRol().toString());
+       // header.setPic(usuario.getIcon());
+        //header.setUserName(usuario.getUsuario());
+        //header.setRol(usuario.getRol().toString());
     }
     private void initEventVisualizarSecciones() {
 
-        boolean editable = (usuario.getTipoRol() == Rol.Tipo.COORDINADOR);
+        boolean editable = (usuario.getRol().getTp() == Rol.Tipo.COORDINADOR);
         
         this.setEventSecciones(new EventClasesVisualizar() {
             @Override
             public void visualizar(ModelClass clase) {
-                main.showForm(new Form_VistaClase(clase, eventVisualizarSeccion, editable));
+                main.showForm(new Form_VistaClase());
+                //main.showForm(new Form_VistaClase(clase, eventVisualizarSeccion, editable));
             }
         });
 
@@ -113,12 +113,13 @@ public class Main extends javax.swing.JFrame {
 
     private void initEventVisualizarSeccion() {
         
-        boolean editable = (usuario.getTipoRol() == Rol.Tipo.COORDINADOR);
+        boolean editable = (usuario.getRol().getTp() == Rol.Tipo.COORDINADOR);
         
         this.eventVisualizarSeccion = new EventSeccionVisualizar() {
             @Override
             public void visualizar(ModelSeccion seccion) {
-                main.showForm(new Form_VistaSeccion(seccion, eventStudent, editable));
+                main.showForm(new Form_VistaSeccion());
+                //main.showForm(new Form_VistaClase(clase, eventVisualizarSeccion, editable));
             }
         };
     }
@@ -132,7 +133,7 @@ public class Main extends javax.swing.JFrame {
 
             @Override
             public void update(ModelStudent student) {
-                MessageInput input = new MessageInput(Main.getFrames()[0], true);
+                Message input = new Message(Main.getFrames()[0], true);
 
                 input.showMessage("Ingrese la nota para [ " + student.getName()
                         + " - " + student.getNoCuenta() + " ]");
@@ -142,7 +143,7 @@ public class Main extends javax.swing.JFrame {
                 }
             }
 
-            @Override
+           
             public void visualizar(ModelStudent student) {
 
                 System.out.println("nomas ver xD " + student.getName());
