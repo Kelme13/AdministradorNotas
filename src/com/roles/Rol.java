@@ -87,7 +87,16 @@ public class Rol {
                     break;
                 case DOCENTE:
                     // Lo mismo como en el estudiantes
+                    setItemsMenu(new ModelMenu[3]);
+                    
+                    getItemsMenu()[0] = new ModelMenu(new ImageIcon(getClass().getResource("/com/icon/1.png")),
+                            "Inicio");
 
+                    getItemsMenu()[1] = new ModelMenu(new ImageIcon(getClass().getResource("/com/icon/7.png")),
+                            "Clases", "Todas", "Fisica I", "Teoria de Base Datos", "Ingles III");
+
+                    getItemsMenu()[2] = new ModelMenu(new ImageIcon(getClass().getResource("/com/icon/5.png")),
+                            "Estudiantes");
                     break;
                 default:
                     break;
