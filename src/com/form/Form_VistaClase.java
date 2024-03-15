@@ -29,16 +29,18 @@ public class Form_VistaClase extends javax.swing.JPanel {
         this.clase = clase;
         this.event = event;
         
+        jLabel1.setText("Clases / " + clase.getNombre());
+        
         
         tableSecciones.fixTable(jScrollPane2);
 
-        initComponents(editable);
+        initComponentes(editable);
         initTxts();
         initDataTable();
 
     }
 
-    private void initComponents(boolean editable) {
+    private void initComponentes(boolean editable) {
 
         if (editable) {
             Icon icon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.LIBRARY_ADD, 40, Color.RED, Color.ORANGE);

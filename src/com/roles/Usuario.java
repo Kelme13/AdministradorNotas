@@ -6,12 +6,27 @@ package com.roles;
 
 import com.model.ModelCardClass;
 import java.util.List;
+import javax.swing.Icon;
 
 /**
  *
  * @author elote
  */
 public class Usuario {
+
+    /**
+     * @return the icon
+     */
+    public Icon getIcon() {
+        return icon;
+    }
+
+    /**
+     * @param icon the icon to set
+     */
+    public void setIcon(Icon icon) {
+        this.icon = icon;
+    }
 
     /**
      * @return the rol
@@ -62,47 +77,20 @@ public class Usuario {
         this.contra = contra;
     }
 
-    /**
-     * @return the clases
-     */
-    public List<ModelCardClass> getClases() {
-        return clases;
-    }
 
-    /**
-     * @param clases the clases to set
-     */
-    public void setClases(List<ModelCardClass> clases) {
-        this.clases = clases;
-    }
-    
-    
-    
+
     private String id;
     private String usuario;
     private String contra;
     private Rol rol;
-    
-    private List<ModelCardClass> clases;
+    private Icon icon;
 
-    public Usuario(String id, String usuario, String contra, Rol rol, List<ModelCardClass> clases) {
+    public Usuario(String id, String usuario, String contra, Rol rol, Icon icon) {
         this.id = id;
         this.usuario = usuario;
         this.contra = contra;
         this.rol = rol;
-        this.clases = clases;
-    }
-    
-    public Usuario(String id, String usuario, String contra, Rol rol) {
-        this.id = id;
-        this.usuario = usuario;
-        this.contra = contra;
-        this.rol = rol;
-        this.clases = null;
+        this.icon = icon;
     }
 
-    
-    
-    
-    
 }

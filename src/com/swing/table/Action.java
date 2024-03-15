@@ -26,6 +26,8 @@ public class Action extends javax.swing.JPanel {
         cmdVisualizar.setIcon(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.APPS,
                 20, new Color(33, 105, 249), new Color(93, 58, 196)));
         
+        cmdVisualizar.setVisible(false);
+        
         
         cmdEdit.addActionListener(new ActionListener() {
             @Override
@@ -85,13 +87,18 @@ public class Action extends javax.swing.JPanel {
         
         cmdEdit.setVisible(false);
         
-        cmdDelete.setVisible(false);
+        cmdDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                data.getEvent().delete(data.getSeccion());
+            }
+        });
         
         
         cmdVisualizar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                data.getEvent().verSeccion(data.getClase());
+                data.getEvent().verSeccion(data.getSeccion());
             }
                 
         });

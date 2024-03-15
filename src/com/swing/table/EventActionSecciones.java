@@ -4,7 +4,6 @@
  */
 package com.swing.table;
 
-import com.model.ModelClass;
 import com.model.ModelSeccion;
 
 /**
@@ -12,6 +11,8 @@ import com.model.ModelSeccion;
  * @author elote
  */
 public interface EventActionSecciones {
-    
+
     public void verSeccion(ModelSeccion seccion);
+
+    public void delete(ModelSeccion seccion);
 }

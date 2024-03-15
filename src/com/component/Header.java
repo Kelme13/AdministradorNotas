@@ -1,5 +1,6 @@
 package com.component;
 
+import com.roles.Usuario;
 import java.awt.event.ActionListener;
 
 /**
@@ -15,6 +16,12 @@ public class Header extends javax.swing.JPanel {
     public void addMenuEvent(ActionListener event) {
         cmdMenu.addActionListener(event);
         
+    }
+    
+    public void setUser(Usuario user) {
+        this.pic.setIcon(user.getIcon());
+        this.lblUserName.setText(user.getUsuario());
+        this.lblRol.setText(user.getRol().toString());
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

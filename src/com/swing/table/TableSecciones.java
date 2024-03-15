@@ -70,6 +70,21 @@ public class TableSecciones extends JTable{
                     return cell;
                     
                 }
+                else if(value instanceof ModelAction) {
+                    ModelAction data = (ModelAction) value;
+                    Action cell = new Action(data);
+                    
+                    
+                    if(isSelected) {
+                        cell.setBackground(new Color(239, 244, 255));
+                    }
+                    else {
+                        cell.setBackground(Color.WHITE);
+                    }
+                    
+                    return cell;
+                    
+                }
                 else {
                     Component com = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                     

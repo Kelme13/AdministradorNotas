@@ -160,7 +160,7 @@ public class ModelSeccion {
                 generarColor(), generarColor());
 
         String c = estudiantes + " / " + max;
-        return new Object[]{new ModelProfile(icon, seccion), c, docente.getNombre(),
+        return new Object[]{new ModelProfile(icon, seccion), docente.getNombre(), c,
             new ModelActionSeccion(this, event)};
 
     }

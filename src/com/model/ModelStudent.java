@@ -1,10 +1,8 @@
-
 package com.model;
 
 import com.swing.table.EventAction;
 import com.swing.table.ModelAction;
 import com.swing.table.ModelProfile;
-import java.text.DecimalFormat;
 import javax.swing.Icon;
 
 /**
@@ -83,34 +81,6 @@ public class ModelStudent {
         this.gender = gender;
     }
 
-    /**
-     * @return the course
-     */
-    public String getCourse() {
-        return course;
-    }
-
-    /**
-     * @param course the course to set
-     */
-    public void setCourse(String course) {
-        this.course = course;
-    }
-
-    /**
-     * @return the fees
-     */
-    public double getFees() {
-        return fees;
-    }
-
-    /**
-     * @param fees the fees to set
-     */
-    public void setFees(double fees) {
-        this.fees = fees;
-    }
-
     public ModelStudent() {
     }
 
@@ -118,34 +88,24 @@ public class ModelStudent {
         this.icon = icon;
         this.name = name;
         this.gender = gender;
-        this.course = "";
         this.carrera = carrera;
         this.noCuenta = noCuenta;
-        this.fees = 0f;
     }
 
-    
-    public ModelStudent(Icon icon, String name, String gender, String course, double fees) {
-        this.icon = icon;
-        this.name = name;
-        this.gender = gender;
-        this.course = course;
-        this.fees = fees;
+    public Object[] toRowTable(EventAction event, int i) {
+        if (i == 0) {
+            return new Object[]{new ModelProfile(icon, name), gender, carrera,
+                noCuenta, new ModelAction(this, event)};
+        } else {
+            return new Object[]{new ModelProfile(icon, noCuenta), name, new ModelAction(this, event)};
+        }
+
     }
-    
-    public Object[]toRowTable(EventAction event) {
-        
-        return new Object[] {new ModelProfile(icon, name), gender, carrera,
-              noCuenta, new ModelAction(this, event)};
-        
-    }
-    
+
     private Icon icon;
     private String name;
     private String gender;
-    private String course;
     private String carrera;
     private String noCuenta;
-    private double fees;
-    
+
 }

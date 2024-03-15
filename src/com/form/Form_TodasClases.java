@@ -43,7 +43,7 @@ public class Form_TodasClases extends javax.swing.JPanel {
             @Override
             public void delete(ModelClass clase) {
                 if (showMessage("Realmente Desea Borrar: " + clase.getNombre())) {
-                    System.out.println("User click OK");
+                    System.out.println("Borrando Esta clase de " + clase.getNombre());
                 } else {
                     System.out.println("User click Cancel");
                 }
@@ -53,7 +53,7 @@ public class Form_TodasClases extends javax.swing.JPanel {
             public void update(ModelClass clase) {
                 
                 if (showMessage("Modificar la clase: " + clase.getNombre())) {
-                    System.out.println("User click OK");
+                    System.out.println("Modifiando esta clase de  " + clase.getNombre());
                 }
             
             }

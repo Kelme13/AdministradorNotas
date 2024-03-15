@@ -16,14 +16,14 @@ public class ModelActionSeccion {
     /**
      * @return the seccion
      */
-    public ModelSeccion getClase() {
+    public ModelSeccion getSeccion() {
         return seccion;
     }
 
     /**
      * @param clase the seccion to set
      */
-    public void setClase(ModelSeccion clase) {
+    public void setSeccion(ModelSeccion clase) {
         this.seccion = clase;
     }
 

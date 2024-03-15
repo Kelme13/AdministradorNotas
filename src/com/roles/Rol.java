@@ -11,6 +11,17 @@ public class Rol {
         DOCENTE
     }
 
+    @Override
+    public String toString() {
+        if (null == tp) {
+            return "Docente";
+        } else return switch (tp) {
+            case COORDINADOR -> "Coordinador";
+            case ESTUDIANTE -> "Estudiante";
+            default -> "Docente";
+        };
+    }
+
     /**
      * @return the tp
      */
@@ -72,9 +83,8 @@ public class Rol {
 
                     // La idea es mandar como parametros las clases para crear un
                     // submenu y asi
-                    
                     setItemsMenu(new ModelMenu[3]);
-                    
+
                     getItemsMenu()[0] = new ModelMenu(new ImageIcon(getClass().getResource("/com/icon/1.png")),
                             "Inicio");
 
@@ -88,7 +98,7 @@ public class Rol {
                 case DOCENTE:
                     // Lo mismo como en el estudiantes
                     setItemsMenu(new ModelMenu[3]);
-                    
+
                     getItemsMenu()[0] = new ModelMenu(new ImageIcon(getClass().getResource("/com/icon/1.png")),
                             "Inicio");
 

@@ -1,4 +1,3 @@
-
 package com.form;
 
 import com.component.CardClass;
@@ -16,7 +15,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import net.miginfocom.swing.MigLayout;
 
-
 /**
  *
  * @author kelvi
@@ -25,12 +23,13 @@ public class Form_Home extends javax.swing.JPanel {
 
     CardClass[] clases = new CardClass[5];
     private MigLayout layout;
+
     public Form_Home() {
         initComponents();
-        
+
         table1.fixTable(jScrollPane1);
         setOpaque(false);
-        
+
         initData();
     }
 
@@ -46,7 +45,7 @@ public class Form_Home extends javax.swing.JPanel {
         card2.setData(new ModelCardClass("Estructura de Datos I", 5100, 0, icon));
         card3.setData(new ModelCardClass("Lab. Programacion I", 100, 50, icon));
     }
-    
+
     private void initNoticeBoard() {
         noticeBoard.addDate("04/10/2021");
         noticeBoard.addNoticeBoard(new ModelNoticeBoard(new Color(94, 49, 238), "Hidemode", "Now", "Sets the hide mode for the component. If the hide mode has been specified in the This hide mode can be overridden by the component constraint."));
@@ -58,54 +57,56 @@ public class Form_Home extends javax.swing.JPanel {
         noticeBoard.addNoticeBoard(new ModelNoticeBoard(new Color(238, 46, 57), "Push", "7:15 AM", "Makes the row and/or column that the component is residing in grow with \"weight\". This can be used instead of having a \"grow\" keyword in the column/row constraints."));
         noticeBoard.scrollToTop();
     }
-    
+
     private void initTableData() {
-        
+
         EventAction eventAction = new EventAction() {
             @Override
             public void delete(ModelStudent student) {
-                
+
                 if (showMessage("Delete Student : " + student.getName())) {
                     System.out.println("User click OK");
                 } else {
                     System.out.println("User click Cancel");
                 }
-              
+
             }
 
             @Override
             public void update(ModelStudent student) {
-                
+
                 if (showMessage("Update Student : " + student.getName())) {
                     System.out.println("User click OK");
                 } else {
                     System.out.println("User click Cancel");
                 }
-                
+
             }
         };
-        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile.jpg")), "Jonh", "Male", "12241008", "I-01").toRowTable(eventAction));
-        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile1.jpg")), "Dara", "Male", "12384781", "I-01").toRowTable(eventAction));
-        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile2.jpg")), "Bora", "Male", "C12241008", "I-01").toRowTable(eventAction));
-        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile2.jpg")), "Bora", "Male", "12241008", "I-01").toRowTable(eventAction));
-        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile2.jpg")), "Bora", "Male", "12241008", "I-01").toRowTable(eventAction));
-        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile2.jpg")), "Bora", "Male", "12241008", "I-01").toRowTable(eventAction));
-        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile2.jpg")), "Bora", "Male", "12241008", "I-01").toRowTable(eventAction));
-        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile2.jpg")), "Bora", "Male", "12241008", "I-01").toRowTable(eventAction));
-        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile2.jpg")), "Bora", "Male", "12241008", "I-01").toRowTable(eventAction));
-        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile2.jpg")), "Bora", "Male", "12241008", "I-01").toRowTable(eventAction));
-        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile2.jpg")), "Bora", "Male", "12241008", "I-01").toRowTable(eventAction));
-        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile2.jpg")), "Bora", "Male", "12241008", "I-01").toRowTable(eventAction));
-        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile2.jpg")), "Bora", "Male", "12241008", "I-01").toRowTable(eventAction));
+        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile.jpg")), "Jonh", "Male", "12241008", "I-01").toRowTable(eventAction, 0));
+
+        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile.jpg")), "Jonh", "Male", "12241008", "I-01").toRowTable(eventAction, 0));
+
+        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile.jpg")), "Jonh", "Male", "12241008", "I-01").toRowTable(eventAction, 0));
+        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile.jpg")), "Jonh", "Male", "12241008", "I-01").toRowTable(eventAction, 0));
+
+        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile.jpg")), "Jonh", "Male", "12241008", "I-01").toRowTable(eventAction, 0));
+
+        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile.jpg")), "Jonh", "Male", "12241008", "I-01").toRowTable(eventAction, 0));
+        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile.jpg")), "Jonh", "Male", "12241008", "I-01").toRowTable(eventAction, 0));
+        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile.jpg")), "Jonh", "Male", "12241008", "I-01").toRowTable(eventAction, 0));
+        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile.jpg")), "Jonh", "Male", "12241008", "I-01").toRowTable(eventAction, 0));
+        table1.addRow(new ModelStudent(new ImageIcon(getClass().getResource("/com/icon/profile.jpg")), "Jonh", "Male", "12241008", "I-01").toRowTable(eventAction, 0));
+
     }
-    
+
     private boolean showMessage(String message) {
         Message obj = new Message(Main.getFrames()[0], true);
         obj.showMessage(message);
-        
+
         return obj.isOk();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

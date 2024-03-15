@@ -49,6 +49,11 @@ public class Form_VistaTablaSecciones extends javax.swing.JPanel {
                 System.out.println("Mirando esta seccion " + seccion.getSeccion());
             }
 
+            @Override
+            public void delete(ModelSeccion seccion) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
             
         };
 
