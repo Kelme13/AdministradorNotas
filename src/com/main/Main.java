@@ -342,10 +342,17 @@ public class Main extends javax.swing.JFrame {
         }
         //</editor-fold>
 
+
+
+        
+
+
         /* Create and display the form */
-         String url = "jdbc:sqlserver://Fabs;databaseName=PruebaDeCafe;trustServerCertificate=true;user=GrupoClases;password=Teoria1";
-        String username = "GrupoClases";
-        String password = "Teoria1";
+         //String url = "jdbc:sqlserver://Fabs;databaseName=PruebaDeCafe;trustServerCertificate=true;user=GrupoClases;password=Teoria1";
+         String url = "jdbc:sqlserver://localhost;databaseName=PruebaDeCafe;integratedSecurity=true;trustServerCertificate=true";
+         
+      //  String username = "GrupoClases";
+        //String password = "Teoria1";
         System.out.println("Hola");
         try (Connection connection = DriverManager.getConnection(url)) {
             // Connection successful

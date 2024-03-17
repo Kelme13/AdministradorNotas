@@ -3,9 +3,31 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/kelvi/OneDrive%20-%20Universidad%20Tecnologica%20Centroamericana/Desktop/AdministradorNotas/src/com/form/Form_VistaSeccion.java</file>
-            <file>file:/C:/Users/kelvi/OneDrive%20-%20Universidad%20Tecnologica%20Centroamericana/Desktop/AdministradorNotas/src/com/main/Main.java</file>
-            <file>file:/C:/Users/kelvi/OneDrive%20-%20Universidad%20Tecnologica%20Centroamericana/Desktop/AdministradorNotas/src/com/form/Form_VistaClase.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/swing/ImageAvatar.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/model/ModelClass.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/roles/Rol.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/main/Main.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/form/Form1.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/form/Form_VistaTablaSecciones.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/form/Form_Home.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/swing/combobox/Combobox.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/component/Profile.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/form/Form_VistaClase.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/swing/scrollbar/ModernScrollBarUI.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/swing/noticeboard/ModelNoticeBoard.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/swing/table/ModelAction.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/roles/Usuario.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/ManejoBasesDeDatos/Querys.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/form/MainForm.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/form/Form_TodasClases.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/model/ModelMenu.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/model/ModelDocente.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/form/Form_VistaSeccion.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/component/Header.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/dialogs/Message.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/component/CardClass.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/component/Menu.java</file>
+            <file>file:/C:/Users/fabri/Documents/UNITEC/Teoria%20de%20Base%20de%20Datos%20I/Repositorios/AdministradorNotas/src/com/model/ModelStudent.java</file>
         </group>
     </open-files>
 </project-private>
