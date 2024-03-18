@@ -25,10 +25,12 @@ public class Querys {
 
     }
 
-    public Usuario validarCredenciales(Connection connection, String cuenta, String password) {
+    public Usuario validarCredenciales(String cuenta, String password) {
         Usuario user = null;
 
         try {
+            Connection connection = DriverManager.getConnection(url);
+            
             String sql = "SELECT * FROM Credenciales WHERE NoCuenta = ? AND password = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, cuenta);

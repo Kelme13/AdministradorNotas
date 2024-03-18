@@ -89,10 +89,10 @@ public class Rol {
                             "Inicio");
 
                     getItemsMenu()[1] = new ModelMenu(new ImageIcon(getClass().getResource("/com/icon/7.png")),
-                            "Clases", "Todas", "Fisica I", "Teoria de Base Datos", "Ingles III");
+                            "Clases", "Todas", "Periodo Actual");
 
                     getItemsMenu()[2] = new ModelMenu(new ImageIcon(getClass().getResource("/com/icon/5.png")),
-                            "Docentes");
+                            "Matricula", "Matricular", "Adicionar", "Retirar");
 
                     break;
                 case DOCENTE:
@@ -103,7 +103,7 @@ public class Rol {
                             "Inicio");
 
                     getItemsMenu()[1] = new ModelMenu(new ImageIcon(getClass().getResource("/com/icon/7.png")),
-                            "Clases", "Todas", "Fisica I", "Teoria de Base Datos", "Ingles III");
+                            "Clases");
 
                     getItemsMenu()[2] = new ModelMenu(new ImageIcon(getClass().getResource("/com/icon/5.png")),
                             "Estudiantes");

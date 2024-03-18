@@ -5,6 +5,8 @@ import com.roles.Usuario;
 import com.swing.icon.GoogleMaterialDesignIcons;
 import com.swing.icon.IconFontSwing;
 import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.*;
 import javax.swing.Icon;
 
@@ -13,23 +15,38 @@ import javax.swing.Icon;
  * @author kelvi
  */
 public class Login extends javax.swing.JFrame {
-    
-    String url = "jdbc:sqlserver://localhost;databaseName=PruebaDeCafe;integratedSecurity=true;trustServerCertificate=true";
 
     public Login() {
 
         initComponents();
         this.setLocationRelativeTo(null);
+        
+        // Agregar un KeyListener al campo de texto para detectar la pulsación de "Enter"
+        txtPassword.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                   validarCredenciales();   
+                }
+            }
+        });
+    }
+    
+    private void validarCredenciales() {
+        Querys querys = new Querys();
+        char[] password = txtPassword.getPassword();
 
+        Usuario user = querys.validarCredenciales(txtCuenta.getText(), new String(password));
 
-        try (Connection connection = DriverManager.getConnection(url)) {
+        if (user != null) {
+            System.out.println("EYYYYYY  " + user.getUsuario());
+            this.setVisible(false);
 
-            System.out.println("Connected to the database.");
-        } catch (SQLException e) {
-            // Connection failed
-            System.err.println("Failed to connect to the database: " + e.getMessage());
+            Main main = new Main(user, this);
+
+            this.setVisible(true);
+
+            System.out.println("Ya se cerro");
         }
-
     }
 
     @SuppressWarnings("unchecked")
@@ -58,14 +75,14 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
         jLabel2.setText("Numero de Cuenta");
 
-        txtCuenta.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
-        txtCuenta.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
+        txtCuenta.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
+        txtCuenta.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
         jLabel3.setText("Contraseña");
 
-        txtPassword.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
-        txtPassword.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
+        txtPassword.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
+        txtPassword.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Necesita crear mas usuarios?");
@@ -102,12 +119,12 @@ public class Login extends javax.swing.JFrame {
                     .addGroup(bgLayout.createSequentialGroup()
                         .addGap(51, 51, 51)
                         .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
                             .addComponent(txtCuenta, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(button1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(button1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jSeparator1)
+                            .addComponent(jSeparator2)))
                     .addGroup(bgLayout.createSequentialGroup()
                         .addGap(135, 135, 135)
                         .addComponent(jLabel3)))
@@ -157,31 +174,7 @@ public class Login extends javax.swing.JFrame {
 
     private void button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button1MouseClicked
         // TODO add your handling code here:
-        
-        try (Connection connection = DriverManager.getConnection(url)) {
-            Querys querys = new Querys();
-            char[] password = txtPassword.getPassword();
-            
-            Usuario user = querys.validarCredenciales(connection, txtCuenta.getText(), new String(password));
-            
-            if(user != null) {
-                System.out.println("EYYYYYY  " + user.getUsuario());
-                this.setVisible(false);
-                
-                Main main = new Main(user, this);
-                
-                this.setVisible(true);
-                
-                
-                System.out.println("Ya se cerro");
-            }
-            
-        } catch (SQLException e) {
-            // Connection failed
-            System.err.println("Failed to connect to the database: " + e.getMessage());
-        }
-        
-        
+        validarCredenciales();
     }//GEN-LAST:event_button1MouseClicked
 
     /**
@@ -212,22 +205,6 @@ public class Login extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        //String url = "jdbc:sqlserver://Fabs;databaseName=PruebaDeCafe;trustServerCertificate=true;user=GrupoClases;password=Teoria1";
-        String url = "jdbc:sqlserver://localhost;databaseName=PruebaDeCafe;integratedSecurity=true;trustServerCertificate=true";
-
-        //  String username = "GrupoClases";
-        //String password = "Teoria1";
-        System.out.println("Hola");
-        try (Connection connection = DriverManager.getConnection(url)) {
-            // Connection successful
-            System.out.println("Connected to the database.");
-            // You can execute SQL queries or perform database operations here
-        } catch (SQLException e) {
-            // Connection failed
-            System.err.println("Failed to connect to the database: " + e.getMessage());
-        }
-        System.out.println("Adios");
-
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {

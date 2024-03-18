@@ -27,8 +27,8 @@ public class CardClass extends javax.swing.JPanel {
     public CardClass() {
         initComponents();
         setOpaque(false);
-        setBackground(new Color(112, 69, 246));
-        colorGradient = new Color(255, 255, 255);
+        setBackground(new Color(112, 69, 246, 100));
+        colorGradient = new Color(255, 255, 255, 100);
         pro.setBackground(new Color(255, 255, 255, 100));
         pro.setForeground(Color.WHITE);
     }
@@ -117,13 +117,20 @@ public class CardClass extends javax.swing.JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        Graphics2D g2 = (Graphics2D)g;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        GradientPaint gra = new GradientPaint(0, getHeight(), getBackground(), getWidth(), 0, colorGradient);
-        
-        g2.setPaint(gra);
-        g2.fillRect(0, 0, getWidth(), getHeight());
         super.paintComponent(g);
+        
+        Graphics2D g2d = (Graphics2D) g;
+        
+        // Definir los colores para el degradado
+        Color color1 = new Color(255, 255, 255, 100); // Transparente
+        Color color2 = new Color(255, 255, 255, 0);   // Totalmente transparente
+        
+        // Crear el degradado
+        GradientPaint gradient = new GradientPaint(0, 0, color1, 0, getHeight(), color2);
+        
+        // Pintar el degradado en el fondo del JPanel
+        g2d.setPaint(gradient);
+        g2d.fillRect(0, 0, getWidth(), getHeight());
     }
 
 

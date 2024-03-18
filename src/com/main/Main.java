@@ -85,6 +85,7 @@ public class Main extends javax.swing.JDialog {
         super(parent, false);
 
         initComponents();
+        this.setLocationRelativeTo(null);
 
         Icon icon = new javax.swing.ImageIcon(getClass().getResource("/com/icon/profile2.jpg"));
         
@@ -281,7 +282,7 @@ public class Main extends javax.swing.JDialog {
         initEventVisualizarSeccion();
         initEventStudent();
 
-        main.showForm(new Form_Home());
+        main.showForm(new Form_Home(usuario.getUsuario()));
     }
 
     @SuppressWarnings("unchecked")

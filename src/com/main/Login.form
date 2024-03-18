@@ -53,12 +53,12 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jSeparator1" alignment="0" min="-2" pref="289" max="-2" attributes="0"/>
-                              <Component id="jSeparator2" alignment="0" min="-2" pref="289" max="-2" attributes="0"/>
                               <Component id="jLabel6" alignment="1" pref="302" max="32767" attributes="0"/>
                               <Component id="txtCuenta" alignment="1" max="32767" attributes="0"/>
                               <Component id="txtPassword" alignment="1" max="32767" attributes="0"/>
                               <Component id="button1" max="32767" attributes="0"/>
+                              <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jSeparator2" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -121,11 +121,11 @@
         <Component class="javax.swing.JTextField" name="txtCuenta">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI Light" size="14" style="0"/>
+              <Font name="Segoe UI Light" size="18" style="0"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
-                <EmptyBorder bottom="1" left="5" right="1" top="1"/>
+                <EmptyBorder bottom="1" left="20" right="20" top="1"/>
               </Border>
             </Property>
           </Properties>
@@ -141,11 +141,11 @@
         <Component class="javax.swing.JPasswordField" name="txtPassword">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI Light" size="14" style="0"/>
+              <Font name="Segoe UI Light" size="18" style="0"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
-                <EmptyBorder bottom="1" left="5" right="1" top="1"/>
+                <EmptyBorder bottom="1" left="20" right="20" top="1"/>
               </Border>
             </Property>
           </Properties>
