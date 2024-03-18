@@ -17,7 +17,6 @@ public class Querys {
 
         try (Connection connection = DriverManager.getConnection(url)) {
 
-            System.out.println("Connected to the database.");
         } catch (SQLException e) {
             // Connection failed
             System.err.println("Failed to connect to the database: " + e.getMessage());
@@ -29,8 +28,9 @@ public class Querys {
         Usuario user = null;
 
         try {
-            Connection connection = DriverManager.getConnection(url);
-            
+
+            connection = DriverManager.getConnection(url);
+
             String sql = "SELECT * FROM Credenciales WHERE NoCuenta = ? AND password = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, cuenta);
@@ -40,16 +40,16 @@ public class Querys {
 
             if (rs.next()) {
                 // Buscar el rol que tiene;
-                String name = getCoordinadorUser(connection, cuenta);
+                String name = getCoordinadorNamebyCuenta(connection, cuenta);
                 if (name != null) {
                     user = new Usuario(cuenta, name, cuenta, new Rol(Rol.Tipo.COORDINADOR), null);
                 } else {
-                    name = getEstudianteUser(connection, cuenta);
+                    name = getEstudianteNamebyCuenta(connection, cuenta);
 
                     if (name != null) {
                         user = new Usuario(cuenta, name, cuenta, new Rol(Rol.Tipo.ESTUDIANTE), null);
                     } else {
-                        name = getMaestroUser(connection, cuenta);
+                        name = getMaestroNamebyCuenta(connection, cuenta);
 
                         if (name != null) {
                             user = new Usuario(cuenta, name, cuenta, new Rol(Rol.Tipo.DOCENTE), null);
@@ -72,7 +72,7 @@ public class Querys {
         return user;
     }
 
-    private String getCoordinadorUser(Connection connection, String cuenta) {
+    private String getCoordinadorNamebyCuenta(Connection connection, String cuenta) {
 
         try {
             Statement stmt = connection.createStatement();
@@ -97,7 +97,7 @@ public class Querys {
 
     }
 
-    private String getEstudianteUser(Connection connection, String cuenta) {
+    private String getEstudianteNamebyCuenta(Connection connection, String cuenta) {
         try {
             Statement stmt = connection.createStatement();
             String sql = "select Nombre from Estudiante where NoCuenta=" + cuenta;
@@ -117,7 +117,7 @@ public class Querys {
         }
     }
 
-    private String getMaestroUser(Connection connection, String cuenta) {
+    private String getMaestroNamebyCuenta(Connection connection, String cuenta) {
         try {
             Statement stmt = connection.createStatement();
             String sql = "select Nombre from Maestro where NoCuenta=" + cuenta;
@@ -139,9 +139,11 @@ public class Querys {
         }
     }
 
-    public void InsertEstudiante(Connection connection, String Nombre, String Nocuenta, String Carrera) {
+    public void InsertEstudiante(String Nombre, String Nocuenta, String Carrera) {
 
         try {
+            connection = DriverManager.getConnection(url);
+
             String sql = "INSERT INTO Estudiante (NoCuenta, Nombre, Carrera) VALUES (?, ?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, Nocuenta);
@@ -162,9 +164,10 @@ public class Querys {
         }
     }
 
-    public void InsertMaestro(Connection connection, String Nombre, String Nocuenta, String Departamento) {
+    public void InsertMaestro(String Nombre, String Nocuenta, String Departamento) {
 
         try {
+            connection = DriverManager.getConnection(url);
             String sql = "INSERT INTO Maestro (NoCuenta, Nombre, Departamento) VALUES (?, ?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, Nocuenta);
@@ -185,9 +188,10 @@ public class Querys {
         }
     }
 
-    public void InsertCoordinador(Connection connection, String Nombre, String Nocuenta, String Departamento) {
+    public void InsertCoordinador(String Nombre, String Nocuenta, String Departamento) {
 
         try {
+            connection = DriverManager.getConnection(url);
             String sql = "INSERT INTO Coordinador (NoCuenta, Coor_Nombre, Departamento) VALUES (?, ?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, Nocuenta);
@@ -208,9 +212,10 @@ public class Querys {
         }
     }
 
-    public void InsertSeccion(Connection connection, String NombreMaestro, String Noseccion, String Programa, String Cantidad, String Hora, String creditos) {
+    public void InsertSeccion(String NombreMaestro, String Noseccion, String Programa, String Cantidad, String Hora, String creditos) {
 
         try {
+            connection = DriverManager.getConnection(url);
             String sql = "INSERT INTO Seccion (NoSeccion, Maestro, Creditos, Programa, CantidadMax, Hora) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, Noseccion);
@@ -235,9 +240,10 @@ public class Querys {
         }
     }
 
-    public void InsertCursando(Connection connection, String NoSeccion, String Nocuenta, int NotadeClase) {
+    public void InsertCursando(String NoSeccion, String Nocuenta, int NotadeClase) {
 
         try {
+            connection = DriverManager.getConnection(url);
             String sql = "INSERT INTO Cursando (NoCuentaEstudiante ,NoSeccion ,NotaDeClase) VALUES (?, ?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, Nocuenta);
@@ -258,9 +264,10 @@ public class Querys {
         }
     }
 
-    public void InsertCatedra(Connection connection, String NoSeccion, String Nocuenta) {
+    public void InsertCatedra(String NoSeccion, String Nocuenta) {
 
         try {
+            connection = DriverManager.getConnection(url);
             String sql = "INSERT INTO Cursando (NoCuentaMaestro ,NoSeccion) VALUES (?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, Nocuenta);
@@ -280,9 +287,10 @@ public class Querys {
         }
     }
 
-    public void InsertAsignacion(Connection connection, String NoSeccion, String Nocuenta, String Nota, String Asignacion) {
+    public void InsertAsignacion(String NoSeccion, String Nocuenta, String Nota, String Asignacion) {
 
         try {
+            connection = DriverManager.getConnection(url);
             String sql = "INSERT INTO Asignacion (NoSeccion,NocuentaEstudiante,Nota,Asignacion) VALUES (?, ?, ?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, NoSeccion);
@@ -304,9 +312,10 @@ public class Querys {
         }
     }
 
-    public void DeleteEstudiante(Connection connection, String Nocuenta) {
+    public void DeleteEstudiante(String Nocuenta) {
 
         try {
+            connection = DriverManager.getConnection(url);
             String sql = "DELETE FROM Estudiante WHERE NoCuenta = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, Nocuenta);
@@ -325,9 +334,10 @@ public class Querys {
         }
     }
 
-    public void DeleteMaestro(Connection connection, String Nocuenta) {
+    public void DeleteMaestro(String Nocuenta) {
 
         try {
+            connection = DriverManager.getConnection(url);
             String sql = "DELETE FROM Maestro WHERE NoCuenta = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, Nocuenta);
@@ -346,9 +356,10 @@ public class Querys {
         }
     }
 
-    public void DeleteCoordinador(Connection connection, String Nocuenta) {
+    public void DeleteCoordinador(String Nocuenta) {
 
         try {
+            connection = DriverManager.getConnection(url);
             String sql = "DELETE FROM Coordinador WHERE NoCuenta = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, Nocuenta);
@@ -367,9 +378,10 @@ public class Querys {
         }
     }
 
-    public void DeleteSeccion(Connection connection, String Noseccion) {
+    public void DeleteSeccion(String Noseccion) {
 
         try {
+            connection = DriverManager.getConnection(url);
             String sql = "DELETE FROM Seccion WHERE NoSeccion = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, Noseccion);
@@ -388,9 +400,10 @@ public class Querys {
         }
     }
 
-    public void DeleteAsignacion(Connection connection, String Asignacion) {
+    public void DeleteAsignacion(String Asignacion) {
 
         try {
+            connection = DriverManager.getConnection(url);
             String sql = "DELETE FROM Estudiante WHERE Asignacion = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, Asignacion);
@@ -409,9 +422,10 @@ public class Querys {
         }
     }
 
-    public void DeleteEstudianteCursando(Connection connection, String Nocuenta, String NoSeccion) {
+    public void DeleteEstudianteCursando(String Nocuenta, String NoSeccion) {
 
         try {
+            connection = DriverManager.getConnection(url);
             String sql = "DELETE FROM Estudiante WHERE NoCuenta = ? and NoSeccion = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, Nocuenta);
@@ -430,9 +444,10 @@ public class Querys {
         }
     }
 
-    public void DeleteSeccionCursando(Connection connection, String NoSeccion) {
+    public void DeleteSeccionCursando(String NoSeccion) {
 
         try {
+            connection = DriverManager.getConnection(url);
             String sql = "DELETE FROM Estudiante WHERE  NoSeccion = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, NoSeccion);
@@ -450,9 +465,10 @@ public class Querys {
         }
     }
 
-    public void DeleteSeccionCatedra(Connection connection, String NoSeccion) {
+    public void DeleteSeccionCatedra(String NoSeccion) {
 
         try {
+            connection = DriverManager.getConnection(url);
             String sql = "DELETE FROM Catedra WHERE NoSeccion = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, NoSeccion);
@@ -470,9 +486,10 @@ public class Querys {
         }
     }
 
-    public void DeleteMaestroCatedra(Connection connection, String Nocuenta, String Noseccion) {
+    public void DeleteMaestroCatedra(String Nocuenta, String Noseccion) {
 
         try {
+            connection = DriverManager.getConnection(url);
             String sql = "DELETE FROM Catedra WHERE NoCuentaMaestra = ? and NoSeccion = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, Nocuenta);
@@ -491,9 +508,10 @@ public class Querys {
         }
     }
 
-    public ResultSet MostrarListadoEstudiantesEnUnaClase(Connection connection, String Nocuenta, String Noseccion) {
+    public ResultSet MostrarListadoEstudiantesEnUnaClase(String Nocuenta, String Noseccion) {
 
         try {
+            connection = DriverManager.getConnection(url);
             Statement stmt = connection.createStatement();
             String sql = "select NoCuenta,Nombre from PruebaDeCafe.Estudiante,Pruebadecafe.Cursando where table.NoSeccion=" + Noseccion;
             ResultSet rs = stmt.executeQuery(sql);
@@ -506,9 +524,10 @@ public class Querys {
         }
     }
 
-    public ResultSet VerSeccionesCoordinadores(Connection connection) {
+    public ResultSet VerSeccionesCoordinadores() {
 
         try {
+            connection = DriverManager.getConnection(url);
             Statement stmt = connection.createStatement();
             String sql = "select NoSeccion,Maestro,Creditos,Programa,Hora from PruebaDeCafe.Seccion";
             ResultSet rs = stmt.executeQuery(sql);
@@ -521,9 +540,10 @@ public class Querys {
         }
     }
 
-    public ResultSet VerSeccionesMaestro(Connection connection, String NoMaestro) {
+    public ResultSet VerSeccionesMaestro(String NoMaestro) {
 
         try {
+            connection = DriverManager.getConnection(url);
             Statement stmt = connection.createStatement();
             String sql = "select NoSeccion, Creditos,Programa, CantidadMax from PruebaDeCafe.Seccion where Maestro=" + NoMaestro;
             ResultSet rs = stmt.executeQuery(sql);
@@ -536,9 +556,10 @@ public class Querys {
         }
     }
 
-    public ResultSet VerNotasEstudiantes(Connection connection, String NoCuenta, String NoSeccion) {
+    public ResultSet VerNotasEstudiantes(String NoCuenta, String NoSeccion) {
 
         try {
+            connection = DriverManager.getConnection(url);
             Statement stmt = connection.createStatement();
             String sql = "select Asignacion,Nota from PruebaDeCafe.Asignacion,PruebaDeCafe.Seccion where NoCuenta=" + NoCuenta + " and NoSeccion=" + NoSeccion;
             ResultSet rs = stmt.executeQuery(sql);

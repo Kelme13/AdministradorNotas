@@ -102,13 +102,13 @@ public class Form_VistaSeccion extends javax.swing.JPanel {
 
     private void initDataTable() {
         EventAction eventAction = getEventAction();
-        
+
         Icon icon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.ACCOUNT_CIRCLE, 40, Color.RED, Color.ORANGE);
-        
+
         ModelStudent student = new ModelStudent(icon, "Kelvin Melgar", "", "", "12241008");
-        
+
         ModelStudent student2 = new ModelStudent(icon, "Pepe Gallo", "", "", "324344");
-        
+
         tableEstudiantes.addRow(new ModelStudentGrade(student, 23).toRowTable(eventAction));
         tableEstudiantes.addRow(new ModelStudentGrade(student2, 32).toRowTable(eventAction));
         tableEstudiantes.addRow(new ModelStudentGrade(student, 56).toRowTable(eventAction));
@@ -273,6 +273,11 @@ public class Form_VistaSeccion extends javax.swing.JPanel {
             }
         });
 
+        btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAgregarMouseClicked(evt);
+            }
+        });
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
@@ -292,7 +297,6 @@ public class Form_VistaSeccion extends javax.swing.JPanel {
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
                         .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -380,6 +384,24 @@ public class Form_VistaSeccion extends javax.swing.JPanel {
     private void txtDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDocenteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDocenteActionPerformed
+
+    private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
+        // TODO add your handling code here:
+
+        MessageInput obj = new MessageInput(Login.getFrames()[0], true);
+        obj.showMessage("");
+
+        if (obj.isOk()) {
+            // se actualiza la nota del estudiante vean
+            try {
+                
+                
+
+            } catch (NumberFormatException e) {
+                // Nota invalida
+            }
+        }
+    }//GEN-LAST:event_btnAgregarMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

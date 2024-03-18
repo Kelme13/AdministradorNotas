@@ -27,6 +27,14 @@ BEGIN
     )
 END
 
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Credenciales' and xtype='U')
+BEGIN
+    CREATE TABLE Credenciales (
+        NoCuenta varchar(30) not null primary key,
+		password varchar(50) not null
+    )
+END
+
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Maestro' AND xtype='U')
 BEGIN
   CREATE TABLE Maestro (
