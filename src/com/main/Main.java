@@ -46,7 +46,7 @@ import java.sql.*;
  *
  * @author kelvi
  */
-public class Main extends javax.swing.JFrame {
+public class Main extends javax.swing.JDialog {
 
     /**
      * @param eventSecciones the eventShowSecciones to set
@@ -81,13 +81,18 @@ public class Main extends javax.swing.JFrame {
     private EventSeccionVisualizar eventVisualizarSeccion;
     private EventAction eventStudent;
 
-    public Main() {
+    public Main(Usuario usuario, java.awt.Frame parent) {
+        super(parent, false);
 
         initComponents();
 
         Icon icon = new javax.swing.ImageIcon(getClass().getResource("/com/icon/profile2.jpg"));
         
-        usuario = new Usuario( "012310", "Kelvinme", "asdfasdf", new Rol(Rol.Tipo.DOCENTE), icon);
+        this.usuario = usuario;
+        usuario.setIcon(icon);
+        
+        this.setVisible(true);
+        
 
         init();
     }
@@ -131,7 +136,7 @@ public class Main extends javax.swing.JFrame {
 
             @Override
             public void update(ModelStudent student) {
-                Message input = new Message(Main.getFrames()[0], true);
+                Message input = new Message(Login.getFrames()[0], true);
 
                 input.showMessage("Ingrese la nota para [ " + student.getName()
                         + " - " + student.getNoCuenta() + " ]");
@@ -201,7 +206,7 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void showPopup(Component com) {
                 MenuItem item = (MenuItem) com;
-                PopupMenu popup = new PopupMenu(Main.this, item.getIndex(), item.getEventSelected(), item.getMenu().getSubMenu());
+                PopupMenu popup = new PopupMenu(Login.getFrames()[0], item.getIndex(), item.getEventSelected(), item.getMenu().getSubMenu());
                 int x = Main.this.getX() + 52;
                 int y = Main.this.getY() + com.getY() + 86;
                 popup.setLocation(x, y);
@@ -285,7 +290,7 @@ public class Main extends javax.swing.JFrame {
 
         bg = new javax.swing.JLayeredPane();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         bg.setBackground(new java.awt.Color(245, 245, 245));
         bg.setOpaque(true);
@@ -318,58 +323,6 @@ public class Main extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-
-
-        
-
-
-        /* Create and display the form */
-         //String url = "jdbc:sqlserver://Fabs;databaseName=PruebaDeCafe;trustServerCertificate=true;user=GrupoClases;password=Teoria1";
-         String url = "jdbc:sqlserver://localhost;databaseName=PruebaDeCafe;integratedSecurity=true;trustServerCertificate=true";
-         
-      //  String username = "GrupoClases";
-        //String password = "Teoria1";
-        System.out.println("Hola");
-        try (Connection connection = DriverManager.getConnection(url)) {
-            // Connection successful
-            System.out.println("Connected to the database.");
-            // You can execute SQL queries or perform database operations here
-        } catch (SQLException e) {
-            // Connection failed
-            System.err.println("Failed to connect to the database: " + e.getMessage());
-        }
-        System.out.println("Adios");
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Main().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLayeredPane bg;

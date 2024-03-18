@@ -3,6 +3,7 @@ package com.form;
 
 import com.dialogs.Message;
 import com.event.EventClasesVisualizar;
+import com.main.Login;
 import com.main.Main;
 import com.model.ModelClass;
 import com.swing.icon.GoogleMaterialDesignIcons;
@@ -83,7 +84,7 @@ public class Form_TodasClases extends javax.swing.JPanel {
     }
 
     private boolean showMessage(String message) {
-        Message obj = new Message(Main.getFrames()[0], true);
+        Message obj = new Message(Login.getFrames()[0], true);
         obj.showMessage(message);
         
         return obj.isOk();

@@ -6,6 +6,7 @@ package com.form;
 
 import com.dialogs.Message;
 import com.event.EventSeccionVisualizar;
+import com.main.Login;
 import com.main.Main;
 import com.model.ModelClass;
 import com.model.ModelDocente;
@@ -67,7 +68,7 @@ public class Form_VistaTablaSecciones extends javax.swing.JPanel {
     }
 
     private boolean showMessage(String message) {
-        Message obj = new Message(Main.getFrames()[0], true);
+        Message obj = new Message(Login.getFrames()[0], true);
         obj.showMessage(message);
 
         return obj.isOk();

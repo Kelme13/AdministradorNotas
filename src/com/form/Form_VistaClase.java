@@ -11,6 +11,7 @@ import java.awt.Color;
 import javax.swing.Icon;
 
 import com.dialogs.Message;
+import com.main.Login;
 import com.main.Main;
 
 /**
@@ -101,7 +102,7 @@ public class Form_VistaClase extends javax.swing.JPanel {
     }
     
      private boolean showMessage(String message) {
-        Message obj = new Message(Main.getFrames()[0], true);
+        Message obj = new Message(Login.getFrames()[0], true);
         obj.showMessage(message);
         
         return obj.isOk();

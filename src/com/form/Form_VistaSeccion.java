@@ -2,6 +2,7 @@ package com.form;
 
 import com.dialogs.Message;
 import com.dialogs.MessageInput;
+import com.main.Login;
 import com.main.Main;
 import com.model.ModelSeccion;
 import com.model.ModelStudent;
@@ -79,7 +80,7 @@ public class Form_VistaSeccion extends javax.swing.JPanel {
             public void update(ModelStudent student) {
                 if (showMessage("Desea actualizar la nota de este alumno:  " + student.getName())) {
 
-                    MessageInput obj = new MessageInput(Main.getFrames()[0], true);
+                    MessageInput obj = new MessageInput(Login.getFrames()[0], true);
                     obj.showMessage("");
 
                     if (obj.isOk()) {
@@ -117,7 +118,7 @@ public class Form_VistaSeccion extends javax.swing.JPanel {
     }
 
     private boolean showMessage(String message) {
-        Message obj = new Message(Main.getFrames()[0], true);
+        Message obj = new Message(Login.getFrames()[0], true);
         obj.showMessage(message);
 
         return obj.isOk();

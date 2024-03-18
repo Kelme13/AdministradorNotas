@@ -2,6 +2,7 @@ package com.form;
 
 import com.component.CardClass;
 import com.dialogs.Message;
+import com.main.Login;
 import com.main.Main;
 import com.model.ModelCardClass;
 import com.model.ModelStudent;
@@ -101,7 +102,7 @@ public class Form_Home extends javax.swing.JPanel {
     }
 
     private boolean showMessage(String message) {
-        Message obj = new Message(Main.getFrames()[0], true);
+        Message obj = new Message(Login.getFrames()[0], true);
         obj.showMessage(message);
 
         return obj.isOk();
