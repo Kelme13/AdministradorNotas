@@ -240,7 +240,7 @@ public class Querys {
         }
     }
 
-    public void InsertCursando(String NoSeccion, String Nocuenta, int NotadeClase) {
+    public void InsertCursando(String NoSeccion, String Nocuenta, double NotadeClase) {
 
         try {
             connection = DriverManager.getConnection(url);
@@ -248,7 +248,7 @@ public class Querys {
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, Nocuenta);
             pstmt.setString(2, NoSeccion);
-            pstmt.setInt(3, NotadeClase);
+            pstmt.setDouble(3, NotadeClase);
 
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
@@ -569,6 +569,32 @@ public class Querys {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+    
+    public void UpdateNotas(String NoCuenta, String NoCuentaMaestro, double Nota) {
+
+        try {
+            connection = DriverManager.getConnection(url);
+             String sql = "UPDATE Asignaciones SET Nota = ? WHERE NoSeccion IN ( SELECT NoSeccion FROM Seccion WHERE Maestro = ? ) AND NoCuentaEstudiante = ?;";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setDouble(1, Nota);
+            pstmt.setString(2, NoCuentaMaestro);
+            pstmt.setString(3, NoCuenta);
+            
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Actualización exitosa.");
+                 
+            } else {
+                System.out.println("No se realizó ninguna actualización.");
+                
+            }
+           
+           pstmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            
         }
     }
 
