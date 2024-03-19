@@ -36,16 +36,34 @@ BEGIN
   );
 END;
 
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Credenciales' AND xtype='U')
+BEGIN
+  CREATE TABLE Credenciales (
+    NoCuenta varchar(30) NOT NULL PRIMARY KEY,
+    Password varchar(50) NOT NULL
+  );
+END;
+
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Clase' AND xtype='U')
+BEGIN
+  CREATE TABLE Clase (
+    CodClase varchar(30) PRIMARY KEY NOT NULL,
+	NomClase varchar(50) NOT NULL,
+	UnidadesV int NOT NULL,
+	Programa varchar(30),
+    
+  );
+END;
+
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Seccion' AND xtype='U')
 BEGIN
   CREATE TABLE Seccion (
-    NoSeccion varchar(30) PRIMARY KEY NOT NULL,
+	CodClase varchar(30) NOT NULL,
+    NoSeccion varchar(30) NOT NULL,
     Maestro varchar(30),
-    Nota varchar(30),  
-    Creditos varchar(30),
-    Programa varchar(30),
     CantidadMax varchar(30),
-    Hora varchar(30)
+    Hora varchar(30),
+	CONSTRAINT PK_Seccion PRIMARY KEY (CodClase, NoSeccion)
   );
 END;
 
@@ -56,16 +74,27 @@ BEGIN
     NoCuentaEstudiante varchar(30),
     Nota varchar(3),  
     Asignacion varchar(30)
-   
   );
 END;
 
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Cursando' AND xtype='U')
 BEGIN
   CREATE TABLE Cursando (
-    NoSeccion varchar(30) ,
+	CodClase varchar(30) NOT NULL,
+    NoSeccion varchar(30) NOT NULL,
+    NoCuentaEstudiante varchar(30) NOT NULL,
+    Nota varchar(3),
+	CONSTRAINT PK_Cursando PRIMARY KEY (CodClase, NoSeccion, NoCuentaEstudiante)
+  );
+END;
+
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='NotaClase' AND xtype='U')
+BEGIN
+  CREATE TABLE NotaClase (
+	CodClase varchar(30),
     NoCuentaEstudiante varchar(30),
-    Nota varchar(3)
+    Nota varchar(3),
+	CONSTRAINT PK_NotaClase PRIMARY KEY (CodClase, NoCuentaEstudiante)
   );
 END;
 
@@ -77,6 +106,12 @@ BEGIN
   );
 END;
 
-ALTER TABLE Seccion ALTER COLUMN Nota float(8)
+ALTER TABLE Cursando ALTER COLUMN Nota float(8)
 
 ALTER TABLE Asignacion ALTER COLUMN Nota float(8)
+
+ALTER TABLE NotaClase ALTER COLUMN Nota float(8)
+
+INSERT INTO Coordinador VALUES ('123','Julio Ramirez', 'Ciencias Matematicas')
+
+INSERT INTO Credenciales VALUES ('123', 'elote200')

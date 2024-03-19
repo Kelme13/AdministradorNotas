@@ -29,6 +29,9 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         });
+        
+        txtCuenta.setText("123");
+        txtPassword.setText("elote200");
     }
     
     private void validarCredenciales() {

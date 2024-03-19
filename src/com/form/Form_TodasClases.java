@@ -1,7 +1,9 @@
 
 package com.form;
 
+import com.ManejoBasesDeDatos.Querys;
 import com.dialogs.Message;
+import com.dialogs.createdClaseDg;
 import com.event.EventClasesVisualizar;
 import com.main.Login;
 import com.main.Main;
@@ -10,7 +12,9 @@ import com.swing.icon.GoogleMaterialDesignIcons;
 import com.swing.icon.IconFontSwing;
 import com.swing.table.EventActionClases;
 import java.awt.Color;
+import java.util.List;
 import javax.swing.Icon;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,6 +25,8 @@ public class Form_TodasClases extends javax.swing.JPanel {
     private EventClasesVisualizar eventShowSecciones;
     
     private boolean editableClases;
+    
+    Querys querys;
     
     public Form_TodasClases(EventClasesVisualizar event, boolean editable) {
         initComponents();
@@ -33,12 +39,20 @@ public class Form_TodasClases extends javax.swing.JPanel {
         this.eventShowSecciones = event;
         table1.fixTable(jScrollPane1);
         
+        querys = new Querys();
+        
         editableClases = editable;
         initTableClases();
         setOpaque(false);
     }
     
-    private void initTableClases() {     
+    private void limpiarTabla() {
+        
+    }
+    
+    private void initTableClases() {
+        
+        table1.limpiarTabla();
         
         EventActionClases eventAction = new EventActionClases() {
             @Override
@@ -66,21 +80,13 @@ public class Form_TodasClases extends javax.swing.JPanel {
                 }
             }
         };
- 
-        table1.addRow(new ModelClass("CCC303", "Teoria de Base de Datos I", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC304", "Teoria de Base de Datos  II", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC307", "Experiencia de Usuario", "I-01", 4).toRowTable(eventAction));
         
-        table1.addRow(new ModelClass("CCC303", "Teoria de Base de Datos I", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC304", "Teoria de Base de Datos  II", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC307", "Experiencia de Usuario", "I-01", 4).toRowTable(eventAction));
+        List<ModelClass> cls = querys.selectTodasClases();
         
         
-        table1.addRow(new ModelClass("CCC303", "Teoria de Base de Datos I", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC304", "Teoria de Base de Datos  II", "I-01", 4).toRowTable(eventAction));
-        table1.addRow(new ModelClass("CCC307", "Experiencia de Usuario", "I-01", 4).toRowTable(eventAction));
-        
-        
+        for(ModelClass c : cls) {
+            table1.addRow(c.toRowTable(eventAction));
+        }
     }
 
     private boolean showMessage(String message) {
@@ -173,6 +179,14 @@ public class Form_TodasClases extends javax.swing.JPanel {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
+        
+        createdClaseDg dg = new createdClaseDg(Login.getFrames()[0], true);
+        dg.showMessage();
+        
+        if (dg.isOk())
+        {
+            initTableClases();
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
 

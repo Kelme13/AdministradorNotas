@@ -62,8 +62,8 @@ public class Message extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         lbMessage = new javax.swing.JLabel();
-        button2 = new com.raven.swing.Button();
-        button1 = new com.raven.swing.Button();
+        btnMsgOk = new com.raven.swing.Button();
+        btnMsgCancel = new com.raven.swing.Button();
         lbIcon = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -76,19 +76,19 @@ public class Message extends javax.swing.JDialog {
         lbMessage.setForeground(new java.awt.Color(82, 82, 82));
         lbMessage.setText("Message");
 
-        button2.setForeground(new java.awt.Color(66, 66, 66));
-        button2.setText("OK");
-        button2.addActionListener(new java.awt.event.ActionListener() {
+        btnMsgOk.setForeground(new java.awt.Color(66, 66, 66));
+        btnMsgOk.setText("OK");
+        btnMsgOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button2ActionPerformed(evt);
+                btnMsgOkActionPerformed(evt);
             }
         });
 
-        button1.setForeground(new java.awt.Color(66, 66, 66));
-        button1.setText("Cancel");
-        button1.addActionListener(new java.awt.event.ActionListener() {
+        btnMsgCancel.setForeground(new java.awt.Color(66, 66, 66));
+        btnMsgCancel.setText("Cancel");
+        btnMsgCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
+                btnMsgCancelActionPerformed(evt);
             }
         });
 
@@ -102,9 +102,9 @@ public class Message extends javax.swing.JDialog {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnMsgOk, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnMsgCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -120,8 +120,8 @@ public class Message extends javax.swing.JDialog {
                     .addComponent(lbMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnMsgCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMsgOk, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -140,14 +140,14 @@ public class Message extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+    private void btnMsgOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMsgOkActionPerformed
         ok = true;
         closeMenu();
-    }//GEN-LAST:event_button2ActionPerformed
+    }//GEN-LAST:event_btnMsgOkActionPerformed
 
-    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+    private void btnMsgCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMsgCancelActionPerformed
         closeMenu();
-    }//GEN-LAST:event_button1ActionPerformed
+    }//GEN-LAST:event_btnMsgCancelActionPerformed
 
     private void closeMenu() {
         if (animator.isRunning()) {
@@ -158,8 +158,8 @@ public class Message extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.raven.swing.Button button1;
-    private com.raven.swing.Button button2;
+    private com.raven.swing.Button btnMsgCancel;
+    private com.raven.swing.Button btnMsgOk;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbIcon;
     private javax.swing.JLabel lbMessage;

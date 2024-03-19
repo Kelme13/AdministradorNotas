@@ -1,8 +1,11 @@
 package com.ManejoBasesDeDatos;
 
+import com.model.ModelClass;
 import com.roles.Rol;
 import com.roles.Usuario;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -24,6 +27,99 @@ public class Querys {
 
     }
 
+    // TODO LO RELACIONADO A LA TABLA 'CLASE'
+    public ModelClass getClaseByCodigo(String codigo) {
+        ModelClass cl = null;
+        try {
+            connection = DriverManager.getConnection(url);
+
+            String sql = "SELECT * FROM Clase WHERE CodClase = ?";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, codigo);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+
+                String cod, nombre, programa;
+                int creditos;
+
+                cod = rs.getString("CodClase");
+                nombre = rs.getString("NomClase");
+                programa = rs.getString("Programa");
+                creditos = Integer.getInteger(rs.getString("UnidadesV"));
+
+                cl = new ModelClass(cod, nombre, programa, creditos);
+            }
+
+            pstmt.close();
+            return cl;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean insertClase(String codigo, String nombre, String programa, String creditos) {
+        boolean v = false;
+        try {
+            connection = DriverManager.getConnection(url);
+
+            String sql = "INSERT INTO Clase VALUES(?, ?, ?, ?)";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, codigo);
+            pstmt.setString(2, nombre);
+            pstmt.setString(3, creditos);
+            pstmt.setString(4, programa);
+
+            int rs = pstmt.executeUpdate();
+
+            v = (rs > 0);
+
+            pstmt.close();
+            return v;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<ModelClass> selectTodasClases() {
+        List<ModelClass> cls = null;
+        try {
+            connection = DriverManager.getConnection(url);
+            Statement stmt = connection.createStatement();
+            String sql = "SELECT * FROM Clase ";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            String cod, nombre, programa;
+            int creditos;
+            
+            
+            cls = new ArrayList<>();
+
+            while (rs.next()) {
+
+                cod = rs.getString("CodClase");
+                nombre = rs.getString("NomClase");
+                creditos = rs.getInt("UnidadesV");
+                
+                programa = rs.getString("Programa");
+
+                cls.add(new ModelClass(cod, nombre, programa, creditos));
+            }
+
+            stmt.close();
+            return cls;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public Usuario validarCredenciales(String cuenta, String password) {
         Usuario user = null;
 
@@ -31,7 +127,7 @@ public class Querys {
 
             connection = DriverManager.getConnection(url);
 
-            String sql = "SELECT * FROM Credenciales WHERE NoCuenta = ? AND password = ?";
+            String sql = "SELECT * FROM Credenciales WHERE NoCuenta = ? AND Password = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, cuenta);
             pstmt.setString(2, password);
@@ -571,30 +667,30 @@ public class Querys {
             return null;
         }
     }
-    
+
     public void UpdateNotas(String NoCuenta, String NoCuentaMaestro, double Nota) {
 
         try {
             connection = DriverManager.getConnection(url);
-             String sql = "UPDATE Asignaciones SET Nota = ? WHERE NoSeccion IN ( SELECT NoSeccion FROM Seccion WHERE Maestro = ? ) AND NoCuentaEstudiante = ?;";
+            String sql = "UPDATE Asignaciones SET Nota = ? WHERE NoSeccion IN ( SELECT NoSeccion FROM Seccion WHERE Maestro = ? ) AND NoCuentaEstudiante = ?;";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setDouble(1, Nota);
             pstmt.setString(2, NoCuentaMaestro);
             pstmt.setString(3, NoCuenta);
-            
+
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("Actualización exitosa.");
-                 
+
             } else {
                 System.out.println("No se realizó ninguna actualización.");
-                
+
             }
-           
-           pstmt.close();
+
+            pstmt.close();
         } catch (Exception e) {
             e.printStackTrace();
-            
+
         }
     }
 
