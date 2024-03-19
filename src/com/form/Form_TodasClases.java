@@ -33,7 +33,7 @@ public class Form_TodasClases extends javax.swing.JPanel {
 
         btnAgregar.setIcon(icon);
         this.user = user;
-        if (user.getRol().getTp() == Rol.Tipo.COORDINADOR)
+        if (user.getRol().getTp() != Rol.Tipo.COORDINADOR)
         {
             btnAgregar.setVisible(false);
         }
