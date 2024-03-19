@@ -1,5 +1,6 @@
 package com.form;
 
+import com.ManejoBasesDeDatos.Querys;
 import com.event.EventSeccionVisualizar;
 import com.model.ModelClass;
 import com.model.ModelDocente;
@@ -11,8 +12,10 @@ import java.awt.Color;
 import javax.swing.Icon;
 
 import com.dialogs.Message;
+import com.dialogs.createdSeccionDg;
 import com.main.Login;
 import com.main.Main;
+import java.util.List;
 
 /**
  *
@@ -23,6 +26,7 @@ public class Form_VistaClase extends javax.swing.JPanel {
     private ModelClass clase;
     private boolean txtEditable = false;
     private EventSeccionVisualizar event;
+    Querys querys;
 
     public Form_VistaClase(ModelClass clase, EventSeccionVisualizar event, boolean editable) {
         initComponents();
@@ -31,7 +35,7 @@ public class Form_VistaClase extends javax.swing.JPanel {
         this.event = event;
         
         jLabel1.setText("Clases / " + clase.getNombre());
-        
+        querys = new Querys();
         
         tableSecciones.fixTable(jScrollPane2);
 
@@ -75,6 +79,8 @@ public class Form_VistaClase extends javax.swing.JPanel {
     
     private void initDataTable() {
         
+        tableSecciones.limpiarTabla();
+        
         EventActionSecciones eventAction = new EventActionSecciones() {
             @Override
             public void verSeccion(ModelSeccion seccion) {
@@ -91,14 +97,11 @@ public class Form_VistaClase extends javax.swing.JPanel {
             }
         };
         
-        ModelDocente d1 = new ModelDocente("12312", "Julio Tal", "M", 32);
-        ModelDocente d2 = new ModelDocente("3432423", "Lucas Tal", "M", 49);
+        List<ModelSeccion> scs = querys.selectTodasSeccionesbyClase(clase.getCodigo());
         
-        tableSecciones.addRow(new ModelSeccion("12321", clase, 17, 25, d1).toRowTable(eventAction));
-        
-        tableSecciones.addRow(new ModelSeccion("312", clase, 32, 50, d2).toRowTable(eventAction));
-        
-        
+        for(ModelSeccion s : scs) {
+            tableSecciones.addRow(s.toRowTable(eventAction));
+        }
     }
     
      private boolean showMessage(String message) {
@@ -306,6 +309,13 @@ public class Form_VistaClase extends javax.swing.JPanel {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
+        createdSeccionDg dg = new createdSeccionDg(Login.getFrames()[0], true, clase.getCodigo());
+        dg.showMessage();
+        
+        if(dg.isOk()) {
+            initDataTable();
+        }
+        
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed

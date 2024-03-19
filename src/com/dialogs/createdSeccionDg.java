@@ -1,5 +1,7 @@
 package com.dialogs;
 
+import com.ManejoBasesDeDatos.Querys;
+import com.main.Login;
 import com.swing.icon.GoogleMaterialDesignIcons;
 import com.swing.icon.IconFontSwing;
 import java.awt.Color;
@@ -20,6 +22,7 @@ public class createdSeccionDg extends javax.swing.JDialog {
     private boolean ok;
     private final Animator animator;
     private boolean show = true;
+    private Querys querys;
 
     public createdSeccionDg(java.awt.Frame parent, boolean modal, String clase) {
         super(parent, modal);
@@ -48,10 +51,13 @@ public class createdSeccionDg extends javax.swing.JDialog {
         animator = new Animator(200, target);
         animator.setResolution(0);
         animator.setAcceleration(0.5f);
+
+        querys = new Querys();
+        txtCodigoClase.setText(clase);
+
     }
 
-    public void showMessage(String message) {
-        lbMessage.setText(message);
+    public void showMessage() {
         animator.start();
         setVisible(true);
     }
@@ -109,6 +115,7 @@ public class createdSeccionDg extends javax.swing.JDialog {
         txtCodigoClase.setBackground(new java.awt.Color(236, 236, 236));
         txtCodigoClase.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
         txtCodigoClase.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
+        txtCodigoClase.setEnabled(false);
         txtCodigoClase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCodigoClaseActionPerformed(evt);
@@ -189,7 +196,7 @@ public class createdSeccionDg extends javax.swing.JDialog {
                     .addComponent(txtMax, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCodSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCodigoClase, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCodigoClase, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -238,6 +245,19 @@ public class createdSeccionDg extends javax.swing.JDialog {
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
         ok = true;
+
+        boolean v = querys.insertSeccion(txtCodigoClase.getText(), txtCodSeccion.getText(),
+                txtDocente.getText(), txtMax.getText());
+
+        Message msg = new Message(Login.getFrames()[0], true);
+        if (v) {
+             msg.showMessage("Seccion creada correctamente");
+        }
+        else {
+            msg.showMessage("Ocurrio algun error en la insercion");
+            ok = false;
+        }
+
         closeMenu();
     }//GEN-LAST:event_button2ActionPerformed
 

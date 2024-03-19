@@ -247,10 +247,13 @@ public class createdClaseDg extends javax.swing.JDialog {
             querys.insertClase(txtCodigoClase.getText(), txtNombreClase.getText(),
                     txtPrograma.getText(), txtUnidadesV.getText());
             
+            Message obj = new Message(Login.getFrames()[0], true);
+            obj.showMessage("La CLASE se ha insertado correctamente");
+            obj.isOk();
             
         } else {
             Message obj = new Message(Login.getFrames()[0], true);
-            obj.showMessage("Este codigo NO esta disponible");
+            obj.showMessage("El CODIGO DE LA CLASE, no esta disponible");
             obj.isOk();
         }
 

@@ -45,10 +45,7 @@ public class Form_TodasClases extends javax.swing.JPanel {
         initTableClases();
         setOpaque(false);
     }
-    
-    private void limpiarTabla() {
-        
-    }
+  
     
     private void initTableClases() {
         

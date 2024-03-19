@@ -92,7 +92,7 @@
                       <Component id="txtMax" alignment="1" min="-2" pref="329" max="-2" attributes="0"/>
                       <Component id="txtDocente" alignment="1" min="-2" pref="334" max="-2" attributes="0"/>
                       <Component id="txtCodSeccion" alignment="1" min="-2" pref="331" max="-2" attributes="0"/>
-                      <Component id="txtCodigoClase" alignment="1" min="-2" pref="326" max="-2" attributes="0"/>
+                      <Component id="txtCodigoClase" alignment="1" min="-2" pref="332" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -191,6 +191,7 @@
                 <EmptyBorder bottom="1" left="20" right="20" top="1"/>
               </Border>
             </Property>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCodigoClaseActionPerformed"/>

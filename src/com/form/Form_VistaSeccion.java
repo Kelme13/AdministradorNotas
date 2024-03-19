@@ -1,5 +1,6 @@
 package com.form;
 
+import com.ManejoBasesDeDatos.Querys;
 import com.dialogs.Message;
 import com.dialogs.MessageInput;
 import com.main.Login;
@@ -7,15 +8,19 @@ import com.main.Main;
 import com.model.ModelSeccion;
 import com.model.ModelStudent;
 import com.model.ModelStudentGrade;
+import com.roles.Rol;
 import com.swing.icon.GoogleMaterialDesignIcons;
 import com.swing.icon.IconFontSwing;
 import com.swing.table.EventAction;
 import java.awt.Color;
+import java.util.HashSet;
 import javax.swing.Icon;
+
+import java.util.List;
 
 public class Form_VistaSeccion extends javax.swing.JPanel {
 
-    public Form_VistaSeccion(ModelSeccion seccion, boolean editable) {
+    public Form_VistaSeccion(ModelSeccion seccion, Rol.Tipo rol) {
         initComponents();
 
         this.seccion = seccion;
@@ -24,7 +29,7 @@ public class Form_VistaSeccion extends javax.swing.JPanel {
 
         tableEstudiantes.fixTable(jScrollPane2);
 
-        initComponentes(editable);
+        initComponentes(rol);
         initTxts();
         initDataTable();
 
@@ -32,10 +37,11 @@ public class Form_VistaSeccion extends javax.swing.JPanel {
 
     private ModelSeccion seccion;
     private boolean txtEditable;
+    private Querys querys;
 
-    private void initComponentes(boolean editable) {
+    private void initComponentes(Rol.Tipo rol) {
 
-        if (editable) {
+        if (rol == Rol.Tipo.COORDINADOR) {
             Icon icon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.LIBRARY_ADD, 40, Color.RED, Color.ORANGE);
             btnAgregar.setIcon(icon);
 
@@ -55,6 +61,8 @@ public class Form_VistaSeccion extends javax.swing.JPanel {
         txtDocente.setEditable(false);
         txtNom_Clase.setEditable(false);
         txtSeccion.setEditable(false);
+        
+        querys = new Querys();
 
     }
 
@@ -101,20 +109,20 @@ public class Form_VistaSeccion extends javax.swing.JPanel {
     }
 
     private void initDataTable() {
+        tableEstudiantes.limpiarTabla();
+        
         EventAction eventAction = getEventAction();
 
         Icon icon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.ACCOUNT_CIRCLE, 40, Color.RED, Color.ORANGE);
+        
+        List<ModelStudentGrade> sts = querys.selectSeccionTodosEstudiantes(
+                seccion.getClase().getCodigo(), seccion.getSeccion());
 
-        ModelStudent student = new ModelStudent(icon, "Kelvin Melgar", "", "", "12241008");
-
-        ModelStudent student2 = new ModelStudent(icon, "Pepe Gallo", "", "", "324344");
-
-        tableEstudiantes.addRow(new ModelStudentGrade(student, 23).toRowTable(eventAction));
-        tableEstudiantes.addRow(new ModelStudentGrade(student2, 32).toRowTable(eventAction));
-        tableEstudiantes.addRow(new ModelStudentGrade(student, 56).toRowTable(eventAction));
-        tableEstudiantes.addRow(new ModelStudentGrade(student2, 23).toRowTable(eventAction));
-        tableEstudiantes.addRow(new ModelStudentGrade(student, 98).toRowTable(eventAction));
-        tableEstudiantes.addRow(new ModelStudentGrade(student2, 3).toRowTable(eventAction));
+        for(ModelStudentGrade st : sts) {
+            st.getStudent().setIcon(icon);
+            
+            tableEstudiantes.addRow(st.toRowTable(eventAction));
+        }
     }
 
     private boolean showMessage(String message) {
@@ -379,6 +387,47 @@ public class Form_VistaSeccion extends javax.swing.JPanel {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
+        MessageInput msgI = new MessageInput(Login.getFrames()[0], true);
+        msgI.showMessage("Cuenta");
+        
+        Message msg = new Message(Login.getFrames()[0], true);
+        
+        if(msgI.isOk())
+        {
+            String cuenta = msgI.getInput();
+            
+            if(querys.getEstudianteByCuenta(cuenta) != null)
+            {
+                
+                if(querys.selectEstudianteSeccionByCuenta(
+                        seccion.getClase().getCodigo(), seccion.getSeccion(),
+                        cuenta) == null) {
+                    
+                    boolean v = querys.insertEstudianteSeccion(
+                            seccion.getClase().getCodigo(), seccion.getSeccion(),
+                        cuenta);
+                    
+                    if(v)
+                    {
+                        msg.showMessage("Estudiante agregado a la seccion");
+                        initDataTable();
+                    }
+                    else
+                        msg.showMessage("No se pudo agregar");
+                    
+                }
+                else
+                {
+                     msg.showMessage("Este estudiante ya esta en la seccion");
+                }
+                
+            }
+            else
+            {
+                msg.showMessage("Este estudiante no existe");
+            }
+        }
+        
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void txtDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDocenteActionPerformed

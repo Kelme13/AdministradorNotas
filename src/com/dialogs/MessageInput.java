@@ -94,6 +94,8 @@ public class MessageInput extends javax.swing.JDialog {
 
         lbIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
+        txtInput.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtInput.setForeground(new java.awt.Color(153, 153, 153));
         txtInput.setText("jTextField1");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

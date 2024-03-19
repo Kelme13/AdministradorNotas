@@ -115,3 +115,29 @@ ALTER TABLE NotaClase ALTER COLUMN Nota float(8)
 INSERT INTO Coordinador VALUES ('123','Julio Ramirez', 'Ciencias Matematicas')
 
 INSERT INTO Credenciales VALUES ('123', 'elote200')
+
+
+INSERT INTO Maestro VALUES ('10', 'Lucas Cueva', 'Ingenieria en Sistemas');
+
+INSERT INTO Maestro VALUES ('20', 'Erick Amaya', 'Ingenieria en Sistemas');
+
+INSERT INTO Maestro VALUES ('30', 'Pepe Gallo', 'Ingenierias');
+
+
+INSERT INTO Credenciales VALUES ('10', 'elote200');
+
+INSERT INTO Credenciales VALUES ('20', 'elote200');
+
+INSERT INTO Credenciales VALUES ('30', 'elote200');
+
+INSERT INTO Estudiante VALUES ('1', 'Kelvin Melgar', 'I-01','','');
+
+INSERT INTO Estudiante VALUES ('2', 'Lia Ramirezz', 'I-01', '', '');
+
+INSERT INTO Estudiante VALUES ('3', 'Fabio Ramos', 'I-01', '', '');
+
+INSERT INTO Credenciales VALUES ('1', 'elote200');
+
+INSERT INTO Credenciales VALUES ('2', 'elote200');
+
+INSERT INTO Credenciales VALUES ('3', 'elote200');

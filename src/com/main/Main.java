@@ -122,7 +122,7 @@ public class Main extends javax.swing.JDialog {
         this.eventVisualizarSeccion = new EventSeccionVisualizar() {
             @Override
             public void visualizar(ModelSeccion seccion) {
-                main.showForm(new Form_VistaSeccion(seccion, editable));
+                main.showForm(new Form_VistaSeccion(seccion, usuario.getRol().getTp()));
                 //main.showForm(new Form_VistaClase(clase, eventVisualizarSeccion, editable));
             }
         };

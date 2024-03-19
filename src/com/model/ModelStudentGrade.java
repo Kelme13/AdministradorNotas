@@ -17,14 +17,14 @@ public class ModelStudentGrade {
     /**
      * @return the nota
      */
-    public int getNota() {
+    public float getNota() {
         return nota;
     }
 
     /**
      * @param nota the nota to set
      */
-    public void setNota(int nota) {
+    public void setNota(float nota) {
         this.nota = nota;
     }
 
@@ -42,13 +42,13 @@ public class ModelStudentGrade {
         this.student = student;
     }
 
-    private int nota;
+    private float nota;
     private ModelStudent student;
 
     public ModelStudentGrade() {
     }
 
-    public ModelStudentGrade( ModelStudent student, int nota) {
+    public ModelStudentGrade( ModelStudent student, float nota) {
         this.nota = nota;
         this.student = student;
     }

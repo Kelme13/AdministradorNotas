@@ -1,4 +1,3 @@
-
 package com.swing.table;
 
 import com.swing.scrollbar.ScrollBarCustom;
@@ -17,12 +16,10 @@ import javax.swing.table.TableCellEditor;
  *
  * @author elote
  */
-public class TableSecciones extends JTable{
-    
-    
+public class TableSecciones extends JTable {
 
     public TableSecciones() {
-        
+
         setShowHorizontalLines(true);
         setGridColor(new Color(230, 230, 230));
         setRowHeight(40);
@@ -31,98 +28,85 @@ public class TableSecciones extends JTable{
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 TableHeader header = new TableHeader(value + "");
-                if(column == 3) {
+                if (column == 3) {
                     header.setHorizontalAlignment(JLabel.CENTER);
                 }
-                
+
                 return header;
-            
+
             }
         });
-        
+
         setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                if(value instanceof ModelProfile) {
-                    ModelProfile data = (ModelProfile)value;
+                if (value instanceof ModelProfile) {
+                    ModelProfile data = (ModelProfile) value;
                     Profile cell = new Profile(data);
-                    if(isSelected) {
+                    if (isSelected) {
                         cell.setBackground(new Color(239, 244, 255));
-                    }
-                    else {
+                    } else {
                         cell.setBackground(Color.WHITE);
                     }
-                    
+
                     return cell;
-                }
-                else if(value instanceof ModelActionSeccion) {
+                } else if (value instanceof ModelActionSeccion) {
                     ModelActionSeccion data = (ModelActionSeccion) value;
                     Action cell = new Action(data);
-                    
-                    
-                    if(isSelected) {
+
+                    if (isSelected) {
                         cell.setBackground(new Color(239, 244, 255));
-                    }
-                    else {
+                    } else {
                         cell.setBackground(Color.WHITE);
                     }
-                    
+
                     return cell;
-                    
-                }
-                else if(value instanceof ModelAction) {
+
+                } else if (value instanceof ModelAction) {
                     ModelAction data = (ModelAction) value;
                     Action cell = new Action(data);
-                    
-                    
-                    if(isSelected) {
+
+                    if (isSelected) {
                         cell.setBackground(new Color(239, 244, 255));
-                    }
-                    else {
+                    } else {
                         cell.setBackground(Color.WHITE);
                     }
-                    
+
                     return cell;
-                    
-                }
-                else {
+
+                } else {
                     Component com = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                    
+
                     setBorder(noFocusBorder);
                     com.setForeground(new Color(102, 102, 102));
-                    
-                    if(isSelected) {
+
+                    if (isSelected) {
                         com.setBackground(new Color(239, 244, 255));
-                    }
-                    else {
+                    } else {
                         com.setBackground(Color.WHITE);
                     }
-                    
+
                     return com;
                 }
             }
-            
+
         });
     }
 
     @Override
     public TableCellEditor getCellEditor(int row, int column) {
-        if(column == 3) {
+        if (column == 3) {
             return new TableCellAction();
-        }
-        else {
+        } else {
             return super.getCellEditor(row, column);
         }
     }
-    
-    
-    
-    
+
     public void addRow(Object[] row) {
-        DefaultTableModel mod = (DefaultTableModel)getModel();
+        DefaultTableModel mod = (DefaultTableModel) getModel();
         mod.addRow(row);
     }
-    
+
     public void fixTable(JScrollPane scroll) {
         scroll.getViewport().setBackground(Color.WHITE);
         scroll.setVerticalScrollBar(new ScrollBarCustom());
@@ -132,6 +116,9 @@ public class TableSecciones extends JTable{
         scroll.setBorder(new EmptyBorder(5, 10, 5, 10));
     }
 
+    public void limpiarTabla() {
+        DefaultTableModel model = (DefaultTableModel) this.getModel();
+        model.setRowCount(0); // Establecer el número de filas en 0
+    }
 
-    
 }
