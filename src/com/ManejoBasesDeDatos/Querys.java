@@ -1,6 +1,8 @@
 package com.ManejoBasesDeDatos;
 
 import com.model.ModelClass;
+import com.model.ModelDocente;
+import com.model.ModelSeccion;
 import com.roles.Rol;
 import com.roles.Usuario;
 import java.sql.*;
@@ -26,6 +28,36 @@ public class Querys {
         }
 
     }
+    
+    public ModelDocente getDocenteByCuenta(String cuenta) {
+        ModelDocente dc = null;
+        try {
+            connection = DriverManager.getConnection(url);
+
+            String sql = "SELECT * FROM Maestro WHERE NoCuenta = ?";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, cuenta);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+
+                String noCuenta, nombre;
+
+                noCuenta = rs.getString("NoCuenta");
+                nombre = rs.getString("Nombre");
+
+                dc = new ModelDocente(noCuenta, nombre, "I", 0);
+            }
+
+            pstmt.close();
+            return dc;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    } 
 
     // TODO LO RELACIONADO A LA TABLA 'CLASE'
     public ModelClass getClaseByCodigo(String codigo) {
@@ -119,6 +151,78 @@ public class Querys {
             return null;
         }
     }
+    
+    // ************************************************************************************************************
+    
+    // TODO LO RELACIONADO A LA TABLA SECCION
+    
+    public ModelSeccion getSeccionByNoSeccion(String codClase, String noSeccion) {
+        ModelSeccion sc = null;
+        try {
+            connection = DriverManager.getConnection(url);
+
+            String sql = "SELECT * FROM Seccion WHERE CodClase = ? AND NoSeccion = ?";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, codClase);
+            pstmt.setString(2, noSeccion);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+
+                String maestro;
+                int max;
+                
+                max = Integer.getInteger(rs.getString("CantidadMax"));
+                maestro = rs.getString("Maestro");
+
+                sc = new ModelSeccion(noSeccion, getClaseByCodigo(codClase), 0, max, getDocenteByCuenta(maestro));
+            }
+
+            pstmt.close();
+            return sc;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public List<ModelSeccion> selectTodasSecciones(String codClase) {
+        List<ModelClass> cls = null;
+        try {
+            connection = DriverManager.getConnection(url);
+            Statement stmt = connection.createStatement();
+            String sql = "SELECT * FROM Clase ";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            String cod, nombre, programa;
+            int creditos;
+            
+            
+            cls = new ArrayList<>();
+
+            while (rs.next()) {
+
+                cod = rs.getString("CodClase");
+                nombre = rs.getString("NomClase");
+                creditos = rs.getInt("UnidadesV");
+                
+                programa = rs.getString("Programa");
+
+                cls.add(new ModelClass(cod, nombre, programa, creditos));
+            }
+
+            stmt.close();
+            return cls;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    // ************************************************************************************************************
 
     public Usuario validarCredenciales(String cuenta, String password) {
         Usuario user = null;
