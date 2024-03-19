@@ -27,14 +27,6 @@ BEGIN
     )
 END
 
-IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Credenciales' and xtype='U')
-BEGIN
-    CREATE TABLE Credenciales (
-        NoCuenta varchar(30) not null primary key,
-		password varchar(50) not null
-    )
-END
-
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Maestro' AND xtype='U')
 BEGIN
   CREATE TABLE Maestro (
@@ -57,8 +49,34 @@ BEGIN
   );
 END;
 
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Asignacion' AND xtype='U')
+BEGIN
+  CREATE TABLE Asignacion (
+    NoSeccion varchar(30) ,
+    NoCuentaEstudiante varchar(30),
+    Nota varchar(3),  
+    Asignacion varchar(30)
+   
+  );
+END;
+
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Cursando' AND xtype='U')
+BEGIN
+  CREATE TABLE Cursando (
+    NoSeccion varchar(30) ,
+    NoCuentaEstudiante varchar(30),
+    Nota varchar(3)
+  );
+END;
+
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Catedra' AND xtype='U')
+BEGIN
+  CREATE TABLE Catedra (
+    NoSeccion varchar(30) ,
+    NoCuentaMaestro varchar(30),
+  );
+END;
 
 ALTER TABLE Seccion ALTER COLUMN Nota float(8)
 
-
-
+ALTER TABLE Asignacion ALTER COLUMN Nota float(8)
