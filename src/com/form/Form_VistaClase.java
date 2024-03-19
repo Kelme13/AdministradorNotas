@@ -15,6 +15,8 @@ import com.dialogs.Message;
 import com.dialogs.createdSeccionDg;
 import com.main.Login;
 import com.main.Main;
+import com.roles.Rol;
+import com.roles.Usuario;
 import java.util.List;
 
 /**
@@ -26,9 +28,11 @@ public class Form_VistaClase extends javax.swing.JPanel {
     private ModelClass clase;
     private boolean txtEditable = false;
     private EventSeccionVisualizar event;
+    private Usuario user;
     Querys querys;
 
-    public Form_VistaClase(ModelClass clase, EventSeccionVisualizar event, boolean editable) {
+    public Form_VistaClase(ModelClass clase, EventSeccionVisualizar event, boolean editable,
+            Usuario user) {
         initComponents();
 
         this.clase = clase;
@@ -36,6 +40,7 @@ public class Form_VistaClase extends javax.swing.JPanel {
         
         jLabel1.setText("Clases / " + clase.getNombre());
         querys = new Querys();
+        this.user = user;
         
         tableSecciones.fixTable(jScrollPane2);
 
@@ -97,7 +102,14 @@ public class Form_VistaClase extends javax.swing.JPanel {
             }
         };
         
-        List<ModelSeccion> scs = querys.selectTodasSeccionesbyClase(clase.getCodigo());
+         List<ModelSeccion> scs = null;
+        
+        if(user.getRol().getTp() == Rol.Tipo.DOCENTE)
+            scs = querys.selectSeccionesbyClaseDocente(clase.getCodigo(),
+                    user.getId());
+        else
+            scs = querys.selectTodasSeccionesbyClase(clase.getCodigo());
+       
         
         for(ModelSeccion s : scs) {
             tableSecciones.addRow(s.toRowTable(eventAction));

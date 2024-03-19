@@ -15,11 +15,16 @@ public class Rol {
     public String toString() {
         if (null == tp) {
             return "Docente";
-        } else return switch (tp) {
-            case COORDINADOR -> "Coordinador";
-            case ESTUDIANTE -> "Estudiante";
-            default -> "Docente";
-        };
+        } else {
+            return switch (tp) {
+                case COORDINADOR ->
+                    "Coordinador";
+                case ESTUDIANTE ->
+                    "Estudiante";
+                default ->
+                    "Docente";
+            };
+        }
     }
 
     /**
@@ -65,7 +70,7 @@ public class Rol {
         if (null != getTp()) {
             switch (getTp()) {
                 case COORDINADOR:
-                    setItemsMenu(new ModelMenu[4]);
+                    setItemsMenu(new ModelMenu[5]);
 
                     getItemsMenu()[0] = new ModelMenu(new ImageIcon(getClass().getResource("/com/icon/7.png")),
                             "Clases");
@@ -78,12 +83,15 @@ public class Rol {
                     getItemsMenu()[3] = new ModelMenu(new ImageIcon(getClass().getResource("/com/icon/12.png")),
                             "Usuarios");
 
+                    getItemsMenu()[4] = new ModelMenu(new ImageIcon(getClass().getResource("/com/icon/13.png")),
+                            "Cerrar Sesion");
+
                     break;
                 case ESTUDIANTE:
 
                     // La idea es mandar como parametros las clases para crear un
                     // submenu y asi
-                    setItemsMenu(new ModelMenu[3]);
+                    setItemsMenu(new ModelMenu[4]);
 
                     getItemsMenu()[0] = new ModelMenu(new ImageIcon(getClass().getResource("/com/icon/1.png")),
                             "Inicio");
@@ -93,11 +101,14 @@ public class Rol {
 
                     getItemsMenu()[2] = new ModelMenu(new ImageIcon(getClass().getResource("/com/icon/5.png")),
                             "Matricula", "Matricular", "Adicionar", "Retirar");
+                    
+                    getItemsMenu()[3] = new ModelMenu(new ImageIcon(getClass().getResource("/com/icon/13.png")),
+                            "Cerrar Sesion");
 
                     break;
                 case DOCENTE:
                     // Lo mismo como en el estudiantes
-                    setItemsMenu(new ModelMenu[3]);
+                    setItemsMenu(new ModelMenu[4]);
 
                     getItemsMenu()[0] = new ModelMenu(new ImageIcon(getClass().getResource("/com/icon/1.png")),
                             "Inicio");
@@ -107,6 +118,9 @@ public class Rol {
 
                     getItemsMenu()[2] = new ModelMenu(new ImageIcon(getClass().getResource("/com/icon/5.png")),
                             "Estudiantes");
+                    
+                    getItemsMenu()[3] = new ModelMenu(new ImageIcon(getClass().getResource("/com/icon/13.png")),
+                            "Cerrar Sesion");
                     break;
                 default:
                     break;

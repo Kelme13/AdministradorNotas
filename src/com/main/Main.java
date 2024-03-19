@@ -1,6 +1,4 @@
-
 package com.main;
-
 
 import javax.swing.Icon;
 import com.component.Header;
@@ -42,6 +40,7 @@ import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 import java.sql.*;
+
 /**
  *
  * @author kelvi
@@ -69,6 +68,10 @@ public class Main extends javax.swing.JDialog {
         this.setEventSecciones(eventSecciones);
     }
 
+    private void cerrar() {
+        this.dispose();
+    }
+
     private MigLayout layout;
     private Menu menu;
     private Header header;
@@ -88,12 +91,11 @@ public class Main extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
 
         Icon icon = new javax.swing.ImageIcon(getClass().getResource("/com/icon/profile2.jpg"));
-        
+
         this.usuario = usuario;
         usuario.setIcon(icon);
-        
+
         this.setVisible(true);
-        
 
         init();
     }
@@ -101,24 +103,25 @@ public class Main extends javax.swing.JDialog {
     private void initHeaderElements() {
         header.setUser(usuario);
     }
+
     private void initEventVisualizarSecciones() {
 
         boolean editable = (usuario.getRol().getTp() == Rol.Tipo.COORDINADOR);
-        
+
         this.setEventSecciones(new EventClasesVisualizar() {
             @Override
             public void visualizar(ModelClass clase) {
-               // main.showForm(new Form_VistaClase(clase));
-                main.showForm(new Form_VistaClase(clase, eventVisualizarSeccion, editable));
+                // main.showForm(new Form_VistaClase(clase));
+                main.showForm(new Form_VistaClase(clase, eventVisualizarSeccion, editable, usuario));
             }
         });
 
     }
 
     private void initEventVisualizarSeccion() {
-        
+
         boolean editable = (usuario.getRol().getTp() == Rol.Tipo.DOCENTE);
-        
+
         this.eventVisualizarSeccion = new EventSeccionVisualizar() {
             @Override
             public void visualizar(ModelSeccion seccion) {
@@ -147,7 +150,6 @@ public class Main extends javax.swing.JDialog {
                 }
             }
 
-           
             public void visualizar(ModelStudent student) {
 
                 System.out.println("nomas ver xD " + student.getName());
@@ -172,28 +174,31 @@ public class Main extends javax.swing.JDialog {
                 switch (usuario.getRol().getTp()) {
                     case COORDINADOR -> {
                         if (menuIndex == 0) {
-                            main.showForm(new Form_TodasClases(eventShowSecciones, true));
+                            main.showForm(new Form_TodasClases(eventShowSecciones, usuario));
+                        }
+                         else if(menuIndex == 4)
+                        {
+                            cerrar();
                         }
                     }
                     case ESTUDIANTE -> {
                         // Aqui seria crear un estudiante en base al usuario
-                        
-                        
-                        if(menuIndex == 1)
-                        {
-                            if(subMenuIndex == 0)
-                            {
-                                main.showForm(new Form_Clase(usuario.getId()));
+
+                        if (menuIndex == 1) {
+                            if (subMenuIndex == 0) {
+                                main.showForm(new Form_Clase(usuario.getId(), 0));
+                            } else if (subMenuIndex == 1) {
+                                main.showForm(new Form_Clase(usuario.getId(), 1));
                             }
-                            else if(subMenuIndex == 1)
-                            {
-                                
-                            }
+                        } else if (menuIndex == 3) {
+                            cerrar();
                         }
                     }
                     case DOCENTE -> {
-                        if (menuIndex == 0) {
-                            main.showForm(new Form_TodasClases(eventShowSecciones, false));
+                        if (menuIndex == 1) {
+                            main.showForm(new Form_TodasClases(eventShowSecciones, usuario));
+                        } else if (menuIndex == 3) {
+                            cerrar();
                         }
                     }
                     default -> {
@@ -266,7 +271,7 @@ public class Main extends javax.swing.JDialog {
 
         header = new Header();
         initHeaderElements();
-        
+
         initMenu();
 
         bg.add(menu, "w 230!, spany 2");

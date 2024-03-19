@@ -1,63 +1,56 @@
 
 package com.form;
 
-import static com.model.ModelClass.generarColor;
-import com.model.ModelStudent;
-import com.swing.icon.GoogleMaterialDesignIcons;
-import com.swing.icon.IconFontSwing;
-import com.swing.table.ModelProfile;
-import javax.swing.Icon;
+import com.ManejoBasesDeDatos.Querys;
+import java.util.List;
+
 
 /**
  *
  * @author kelvi
  * 
- * 
- * Este form es para mostrar todas las clases de los estudiante en general
- * Para ver sus notas de cada una
  */
 public class Form_Clase extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Form_Clase
-     */
-    
     private String NoCuenta;
-    
-    private Object[] createdRow() {
-        Icon icon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.CLASS, 60,
-                generarColor(), generarColor());
-        
-        return new Object[]{new ModelProfile(icon, "CC201"), "Programacion I", 4, 98.3};
-    }
+    private int i;
+    private Querys querys;
     
     private void initTableClases() {
+        if(i == 0)
+        {
+            
+        }
+        else
+        {
+            List<Object[]> cls = querys.selectCursandoByEstudiante(NoCuenta);
+            
+            for(Object[] c : cls)
+            {
+                table1.addRow(c);
+            }
+        }
         
-        table1.addRow(createdRow());
-        
-        table1.addRow(createdRow());
-        
-        table1.addRow(createdRow());
-        
-        table1.addRow(createdRow());
-        
-        table1.addRow(createdRow());
-        
-        table1.addRow(createdRow());
-        
-        table1.addRow(createdRow());
     }
-    public Form_Clase(String NoCuenta) {
+    public Form_Clase(String NoCuenta, int i) {
         initComponents();
         
         this.NoCuenta = NoCuenta;
+        this.i = i;
         
         table1.fixTable(jScrollPane1);
+        querys = new Querys();
+        
+        if(i == 1)
+        {
+            table1.getColumnModel().getColumn(2).setHeaderValue("Seccion");
+        }
+        
         initTableClases();
         
         setOpaque(false);
     }
-    
+   
     
     
     /**

@@ -7,6 +7,7 @@ import com.model.ModelStudent;
 import com.model.ModelStudentGrade;
 import com.roles.Rol;
 import com.roles.Usuario;
+import com.swing.table.ModelProfile;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -158,6 +159,70 @@ public class Querys {
         }
     }
 
+    public List<ModelClass> selectTodasClasesByMaestro(String maestro) {
+        List<ModelClass> cls = null;
+        try {
+            connection = DriverManager.getConnection(url);
+
+            String sql = "SELECT * FROM Clase, Seccion WHERE Clase.CodClase = "
+                    + "Seccion.CodClase AND Maestro = ?";
+
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, maestro);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            String cod, nombre, programa;
+            int creditos;
+
+            cls = new ArrayList<>();
+
+            while (rs.next()) {
+
+                cod = rs.getString("CodClase");
+                nombre = rs.getString("NomClase");
+                creditos = rs.getInt("UnidadesV");
+
+                programa = rs.getString("Programa");
+
+                cls.add(new ModelClass(cod, nombre, programa, creditos));
+            }
+
+            pstmt.close();
+            return cls;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public int getCountEstudiantesInSeccion(String codClase, String noSeccion) {
+        int n = 0;
+        try {
+            connection = DriverManager.getConnection(url);
+            String sql = """
+                         SELECT COUNT(Cursando.NoCuentaEstudiante) as Estudiantes FROM Cursando
+                         WHERE CodClase = ? AND NoSeccion = ?""";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, codClase);
+            pstmt.setString(2, noSeccion);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                n = rs.getInt("Estudiantes");
+            }
+
+            pstmt.close();
+            return n;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
     // ************************************************************************************************************
     // TODO LO RELACIONADO A LA TABLA SECCION
     public ModelSeccion getSeccionByNoSeccion(String codClase, String noSeccion) {
@@ -203,7 +268,7 @@ public class Querys {
             ResultSet rs = pstmt.executeQuery();
 
             String noSeccion, maestro;
-            int max;
+            int max, n;
 
             scs = new ArrayList<>();
 
@@ -212,9 +277,46 @@ public class Querys {
                 noSeccion = rs.getString("NoSeccion");
                 maestro = rs.getString("Maestro");
                 max = rs.getInt("CantidadMax");
+                n = getCountEstudiantesInSeccion(codClase, noSeccion);
 
                 scs.add(new ModelSeccion(noSeccion, getClaseByCodigo(codClase),
-                        0, max, getDocenteByCuenta(maestro)));
+                        n, max, getDocenteByCuenta(maestro)));
+            }
+
+            pstmt.close();
+            return scs;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public List<ModelSeccion> selectSeccionesbyClaseDocente(String codClase, String maestro) {
+        List<ModelSeccion> scs = null;
+        try {
+            connection = DriverManager.getConnection(url);
+            String sql = "SELECT * FROM Seccion WHERE CodClase = ?"
+                    + " AND Maestro = ?";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, codClase);
+            pstmt.setString(2, maestro);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            String noSeccion;
+            int max, n;
+
+            scs = new ArrayList<>();
+
+            while (rs.next()) {
+
+                noSeccion = rs.getString("NoSeccion");
+                max = rs.getInt("CantidadMax");
+                n = getCountEstudiantesInSeccion(codClase, noSeccion);
+
+                scs.add(new ModelSeccion(noSeccion, getClaseByCodigo(codClase),
+                        n, max, getDocenteByCuenta(maestro)));
             }
 
             pstmt.close();
@@ -316,9 +418,9 @@ public class Querys {
             return false;
         }
     }
-    
-    public ModelStudentGrade selectEstudianteSeccionByCuenta(String codClase, String noSeccion, String cuenta){
-         ModelStudentGrade st = null;
+
+    public ModelStudentGrade selectEstudianteSeccionByCuenta(String codClase, String noSeccion, String cuenta) {
+        ModelStudentGrade st = null;
         try {
             connection = DriverManager.getConnection(url);
             String sql = "SELECT * FROM Cursando WHERE CodClase = ? AND NoSeccion = ? AND NoCuentaEstudiante = ?";
@@ -338,6 +440,75 @@ public class Querys {
 
             pstmt.close();
             return st;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean updateNotaEstudianteSeccion(String codClase, String noSeccion, String cuenta, float nota) {
+        boolean v = false;
+        try {
+            connection = DriverManager.getConnection(url);
+
+            String sql = "UPDATE Cursando SET Nota = ? WHERE CodClase = ? AND "
+                    + "NoSeccion = ? AND NoCuentaEstudiante = ?";
+
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+
+            pstmt.setFloat(1, nota);
+            pstmt.setString(2, codClase);
+            pstmt.setString(3, noSeccion);
+            pstmt.setString(4, cuenta);
+
+            int rs = pstmt.executeUpdate();
+
+            v = (rs > 0);
+
+            pstmt.close();
+            return v;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<Object[]> selectCursandoByEstudiante(String cuenta) {
+        List<Object[]> sts = null;
+        try {
+            connection = DriverManager.getConnection(url);
+            String sql = """
+                         SELECT Clase.CodClase, NomClase, NoSeccion, Nota
+                         FROM Cursando, Clase 
+                         WHERE Clase.CodClase = Cursando.CodClase
+                         AND NoCuentaEstudiante = ?""";
+
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, cuenta);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            String codClase, noSeccion, nomClase;
+            float nota;
+
+            sts = new ArrayList<>();
+
+            while (rs.next()) {
+
+                codClase = rs.getString("CodClase");
+                noSeccion = rs.getString("NoSeccion");
+                nomClase = rs.getString("NomClase");
+                nota = rs.getFloat("Nota");
+
+                sts.add(new Object[]{
+                    new ModelProfile(ModelClass.generarIcon(), codClase),
+                    nomClase, noSeccion, nota});
+            }
+
+            pstmt.close();
+            return sts;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -394,7 +565,7 @@ public class Querys {
                 // Buscar el rol que tiene;
                 String name = getCoordinadorNamebyCuenta(connection, cuenta);
                 if (name != null) {
-                    user = new Usuario(cuenta, name, cuenta, new Rol(Rol.Tipo.COORDINADOR), null);
+                    user = new Usuario(cuenta, name, "", new Rol(Rol.Tipo.COORDINADOR), null);
                 } else {
                     name = getEstudianteNamebyCuenta(connection, cuenta);
 

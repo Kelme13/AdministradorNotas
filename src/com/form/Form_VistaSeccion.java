@@ -61,7 +61,7 @@ public class Form_VistaSeccion extends javax.swing.JPanel {
         txtDocente.setEditable(false);
         txtNom_Clase.setEditable(false);
         txtSeccion.setEditable(false);
-        
+
         querys = new Querys();
 
     }
@@ -94,10 +94,23 @@ public class Form_VistaSeccion extends javax.swing.JPanel {
                     if (obj.isOk()) {
                         // se actualiza la nota del estudiante vean
                         try {
-                            int nota = Integer.parseInt(obj.getInput());
+                            float nota = Float.parseFloat(obj.getInput());
+
+                            if (nota <= 100.f) {
+                                boolean v = querys.updateNotaEstudianteSeccion(
+                                        seccion.getClase().getCodigo(),
+                                        seccion.getSeccion(),
+                                        student.getNoCuenta(), nota);
+
+                                if (v) {
+                                    showMessage("Nota Actualizada");
+                                    initDataTable();
+                                }
+                            }
 
                         } catch (NumberFormatException e) {
                             // Nota invalida
+                            showMessage("Nota invalida");
                         }
                     }
 
@@ -110,17 +123,17 @@ public class Form_VistaSeccion extends javax.swing.JPanel {
 
     private void initDataTable() {
         tableEstudiantes.limpiarTabla();
-        
+
         EventAction eventAction = getEventAction();
 
         Icon icon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.ACCOUNT_CIRCLE, 40, Color.RED, Color.ORANGE);
-        
+
         List<ModelStudentGrade> sts = querys.selectSeccionTodosEstudiantes(
                 seccion.getClase().getCodigo(), seccion.getSeccion());
 
-        for(ModelStudentGrade st : sts) {
+        for (ModelStudentGrade st : sts) {
             st.getStudent().setIcon(icon);
-            
+
             tableEstudiantes.addRow(st.toRowTable(eventAction));
         }
     }
@@ -389,45 +402,38 @@ public class Form_VistaSeccion extends javax.swing.JPanel {
         // TODO add your handling code here:
         MessageInput msgI = new MessageInput(Login.getFrames()[0], true);
         msgI.showMessage("Cuenta");
-        
+
         Message msg = new Message(Login.getFrames()[0], true);
-        
-        if(msgI.isOk())
-        {
+
+        if (msgI.isOk()) {
             String cuenta = msgI.getInput();
-            
-            if(querys.getEstudianteByCuenta(cuenta) != null)
-            {
-                
-                if(querys.selectEstudianteSeccionByCuenta(
+
+            if (querys.getEstudianteByCuenta(cuenta) != null) {
+
+                if (querys.selectEstudianteSeccionByCuenta(
                         seccion.getClase().getCodigo(), seccion.getSeccion(),
                         cuenta) == null) {
-                    
+
                     boolean v = querys.insertEstudianteSeccion(
                             seccion.getClase().getCodigo(), seccion.getSeccion(),
-                        cuenta);
-                    
-                    if(v)
-                    {
+                            cuenta);
+
+                    if (v) {
                         msg.showMessage("Estudiante agregado a la seccion");
                         initDataTable();
-                    }
-                    else
+                    } else {
                         msg.showMessage("No se pudo agregar");
-                    
+                    }
+
+                } else {
+                    msg.showMessage("Este estudiante ya esta en la seccion");
                 }
-                else
-                {
-                     msg.showMessage("Este estudiante ya esta en la seccion");
-                }
-                
-            }
-            else
-            {
+
+            } else {
                 msg.showMessage("Este estudiante no existe");
             }
         }
-        
+
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void txtDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDocenteActionPerformed
@@ -443,8 +449,6 @@ public class Form_VistaSeccion extends javax.swing.JPanel {
         if (obj.isOk()) {
             // se actualiza la nota del estudiante vean
             try {
-                
-                
 
             } catch (NumberFormatException e) {
                 // Nota invalida

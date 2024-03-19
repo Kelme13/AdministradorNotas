@@ -130,11 +130,22 @@ INSERT INTO Credenciales VALUES ('20', 'elote200');
 
 INSERT INTO Credenciales VALUES ('30', 'elote200');
 
+
 INSERT INTO Estudiante VALUES ('1', 'Kelvin Melgar', 'I-01','','');
 
 INSERT INTO Estudiante VALUES ('2', 'Lia Ramirezz', 'I-01', '', '');
 
 INSERT INTO Estudiante VALUES ('3', 'Fabio Ramos', 'I-01', '', '');
+
+INSERT INTO Estudiante VALUES ('4', 'Leandro Ramos', 'I-01', '', '');
+
+INSERT INTO Estudiante VALUES ('5', 'Mario Mendoza Ramos', 'I-01', '', '');
+
+INSERT INTO Estudiante VALUES ('6', 'Rosalinda Villamir Ramos', 'I-01', '', '');
+
+INSERT INTO Estudiante VALUES ('7', 'Domingos Larios Ramos', 'I-01', '', '');
+
+INSERT INTO Estudiante VALUES ('8', 'Francisco Ramos', 'I-01', '', '');
 
 INSERT INTO Credenciales VALUES ('1', 'elote200');
 

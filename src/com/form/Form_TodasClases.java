@@ -1,4 +1,3 @@
-
 package com.form;
 
 import com.ManejoBasesDeDatos.Querys;
@@ -8,6 +7,8 @@ import com.event.EventClasesVisualizar;
 import com.main.Login;
 import com.main.Main;
 import com.model.ModelClass;
+import com.roles.Rol;
+import com.roles.Usuario;
 import com.swing.icon.GoogleMaterialDesignIcons;
 import com.swing.icon.IconFontSwing;
 import com.swing.table.EventActionClases;
@@ -21,36 +22,35 @@ import javax.swing.table.DefaultTableModel;
  * @author kelvi
  */
 public class Form_TodasClases extends javax.swing.JPanel {
-    
+
     private EventClasesVisualizar eventShowSecciones;
-    
-    private boolean editableClases;
-    
     Querys querys;
-    
-    public Form_TodasClases(EventClasesVisualizar event, boolean editable) {
+    Usuario user;
+
+    public Form_TodasClases(EventClasesVisualizar event, Usuario user) {
         initComponents();
         Icon icon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.LIBRARY_ADD, 40, Color.RED, Color.ORANGE);
-        
+
         btnAgregar.setIcon(icon);
-        if(!editable)
+        this.user = user;
+        if (user.getRol().getTp() == Rol.Tipo.COORDINADOR)
+        {
             btnAgregar.setVisible(false);
-        
+        }
+
         this.eventShowSecciones = event;
         table1.fixTable(jScrollPane1);
-        
+
         querys = new Querys();
-        
-        editableClases = editable;
+
         initTableClases();
         setOpaque(false);
     }
-  
-    
+
     private void initTableClases() {
-        
+
         table1.limpiarTabla();
-        
+
         EventActionClases eventAction = new EventActionClases() {
             @Override
             public void delete(ModelClass clase) {
@@ -63,25 +63,32 @@ public class Form_TodasClases extends javax.swing.JPanel {
 
             @Override
             public void update(ModelClass clase) {
-                
+
                 if (showMessage("Modificar la clase: " + clase.getNombre())) {
                     System.out.println("Modifiando esta clase de  " + clase.getNombre());
                 }
-            
+
             }
 
             @Override
             public void secciones(ModelClass clase) {
-                 if (showMessage("Ver las secciones  de: " + clase.getNombre())) {
+                if (showMessage("Ver las secciones  de: " + clase.getNombre())) {
                     eventShowSecciones.visualizar(clase);
                 }
             }
         };
         
-        List<ModelClass> cls = querys.selectTodasClases();
-        
-        
-        for(ModelClass c : cls) {
+         List<ModelClass> cls = null;
+        if(user.getRol().getTp() == Rol.Tipo.COORDINADOR)
+        {
+             cls = querys.selectTodasClases();
+        }
+        else if(user.getRol().getTp() == Rol.Tipo.DOCENTE)
+        {
+            cls = querys.selectTodasClasesByMaestro(user.getId());
+        }
+          
+        for (ModelClass c : cls) {
             table1.addRow(c.toRowTable(eventAction));
         }
     }
@@ -89,10 +96,10 @@ public class Form_TodasClases extends javax.swing.JPanel {
     private boolean showMessage(String message) {
         Message obj = new Message(Login.getFrames()[0], true);
         obj.showMessage(message);
-        
+
         return obj.isOk();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -176,12 +183,11 @@ public class Form_TodasClases extends javax.swing.JPanel {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        
+
         createdClaseDg dg = new createdClaseDg(Login.getFrames()[0], true);
         dg.showMessage();
-        
-        if (dg.isOk())
-        {
+
+        if (dg.isOk()) {
             initTableClases();
         }
     }//GEN-LAST:event_btnAgregarActionPerformed

@@ -132,6 +132,12 @@ public class ModelClass {
         this.programa = programa;
         this.creditos = creditos;
     }
+    
+    public static Icon generarIcon()
+    {
+        return IconFontSwing.buildIcon(GoogleMaterialDesignIcons.CLASS, 60,
+                generarColor(), generarColor());
+    }
 
     public Object[] toRowTable(EventActionClases event) {
         Icon icon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.CLASS, 60,
