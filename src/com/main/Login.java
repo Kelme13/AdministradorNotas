@@ -1,6 +1,7 @@
 package com.main;
 
 import com.ManejoBasesDeDatos.Querys;
+import com.dialogs.createdUsuario1;
 import com.roles.Usuario;
 import com.swing.icon.GoogleMaterialDesignIcons;
 import com.swing.icon.IconFontSwing;
@@ -89,6 +90,11 @@ public class Login extends javax.swing.JFrame {
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Necesita crear mas usuarios?");
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
 
         button1.setBackground(new java.awt.Color(225, 147, 186));
         button1.setForeground(new java.awt.Color(255, 255, 255));
@@ -179,6 +185,12 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         validarCredenciales();
     }//GEN-LAST:event_button1MouseClicked
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        // TODO add your handling code here:
+        createdUsuario1 dg = new createdUsuario1(this, true);
+        dg.showMessage();
+    }//GEN-LAST:event_jLabel6MouseClicked
 
     /**
      * @param args the command line arguments

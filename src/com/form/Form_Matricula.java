@@ -165,7 +165,7 @@ public class Form_Matricula extends javax.swing.JPanel {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
 
-        MatricularClaseDg dg = new MatricularClaseDg(Login.getFrames()[0], true);
+        MatricularClaseDg dg = new MatricularClaseDg(Login.getFrames()[0], true, user.getId());
         dg.showMessage();
         
         if(dg.isOk())

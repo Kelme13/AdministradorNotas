@@ -14,6 +14,10 @@ import javax.swing.Icon;
  */
 public class Usuario {
 
+    public Usuario() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     /**
      * @return the icon
      */

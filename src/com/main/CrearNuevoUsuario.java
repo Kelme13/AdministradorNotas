@@ -18,6 +18,9 @@ import java.sql.*;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import com.swing.icon.GoogleMaterialDesignIcons;
+import org.jdesktop.animation.timing.Animator;
+import org.jdesktop.animation.timing.TimingTarget;
+import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 
 /**
@@ -26,7 +29,17 @@ import com.swing.icon.GoogleMaterialDesignIcons;
  */
 public class CrearNuevoUsuario extends javax.swing.JDialog {
     
-  
+   public boolean isOk() {
+        return ok;
+    }
+
+    public void setOk(boolean ok) {
+        this.ok = ok;
+    }
+
+    private boolean ok;
+    private final Animator animator;
+    private boolean show = true;
 
     @Override
     public void setLocationRelativeTo(Component c) {
@@ -36,20 +49,37 @@ public class CrearNuevoUsuario extends javax.swing.JDialog {
     /**
      * Creates new customizer CrearNuevoUsuario
      */
-    public CrearNuevoUsuario() {
+    public CrearNuevoUsuario(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
-        this.setLocationRelativeTo(null);
-        txtPassword.addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                   NuevasCredenciales();   
+        
+        TimingTarget target = new TimingTargetAdapter() {
+            @Override
+            public void timingEvent(float fraction) {
+                if (show) {
+                    setOpacity(fraction);
+                } else {
+                    setOpacity(1f - fraction);
                 }
             }
-        });
+
+            @Override
+            public void end() {
+                if (show == false) {
+                    setVisible(false);
+                }
+            }
+
+        };
+        animator = new Animator(200, target);
+        animator.setResolution(0);
+        animator.setAcceleration(0.5f);
+
     }
     
    
     private void NuevasCredenciales() {
+        
         Querys querys = new Querys();
         char[] password = txtPassword.getPassword();
         String nombre="";
@@ -57,31 +87,44 @@ public class CrearNuevoUsuario extends javax.swing.JDialog {
 
         if (user == null) {
             switch(jComboBox1.getSelectedIndex()){
-                case 0:
+                case 0 -> {
                     if(querys.getEstudianteByCuenta(txtCuenta.getText())==null){
-                        JOptionPane.showMessageDialog(this, "Este Numero de Cuenta No existe dentro de la base de datos!", 
-                                 "Error", JOptionPane.ERROR_MESSAGE);
+                        querys.InsertEstudiante(txtNombre.getText(), txtCuenta.getText(), "");
+                    }
+                    
+                    if(querys.getEstudianteByCuenta(txtCuenta.getText())==null){
+                        JOptionPane.showMessageDialog(this, "Este Numero de Cuenta No existe dentro de la base de datos!",
+                                "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     nombre=querys.getEstudianteByCuenta(txtCuenta.getText()).getName();
-                    break;
+                }
                     
-                case 1:
+                case 1 -> {
                     if(querys.getDocenteByCuenta(txtCuenta.getText())==null){
-                        JOptionPane.showMessageDialog(this, "Este Numero de Cuenta No existe dentro de la base de datos!", 
-                                 "Error", JOptionPane.ERROR_MESSAGE);
+                        querys.InsertMaestro(txtNombre.getText(), txtCuenta.getText(), "");
+                    }
+                    
+                    if(querys.getDocenteByCuenta(txtCuenta.getText())==null){
+                        JOptionPane.showMessageDialog(this, "Este Numero de Cuenta No existe dentro de la base de datos!",
+                                "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     nombre=querys.getDocenteByCuenta(txtCuenta.getText()).getNombre();
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     if(querys.getCoordinadorNamebyCuenta(txtCuenta.getText())==null){
-                        JOptionPane.showMessageDialog(this, "Este Numero de Cuenta No existe dentro de la base de datos!", 
-                                 "Error", JOptionPane.ERROR_MESSAGE);
+                        querys.InsertCoordinador(txtNombre.getText(), txtCuenta.getText(), "");
+                    }
+                    
+                    
+                    if(querys.getCoordinadorNamebyCuenta(txtCuenta.getText())==null){
+                        JOptionPane.showMessageDialog(this, "Este Numero de Cuenta No existe dentro de la base de datos!",
+                                "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     nombre=querys.getCoordinadorNamebyCuenta(txtCuenta.getText());
-                    break;
+                }
             }
             System.out.println("EYYYYYY  ");
             user = querys.InsertCredenciales(txtCuenta.getText(),new String(password));
@@ -91,6 +134,11 @@ public class CrearNuevoUsuario extends javax.swing.JDialog {
             this.setVisible(false);
             System.out.println("Ya se cerro");
         }
+    }
+    
+    public void showMessage() {
+        animator.start();
+        setVisible(true);
     }
 
     /**
@@ -111,12 +159,14 @@ public class CrearNuevoUsuario extends javax.swing.JDialog {
         txtCuenta = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
-        jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         button1 = new com.raven.swing.Button();
         jLabel5 = new javax.swing.JLabel();
-        jSeparator4 = new javax.swing.JSeparator();
         jComboBox1 = new javax.swing.JComboBox<>();
+        txtNombre = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtDepCar = new javax.swing.JPasswordField();
+        lblDepCar = new javax.swing.JLabel();
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
         jLabel4.setText("Numero de Cuenta");
@@ -126,11 +176,6 @@ public class CrearNuevoUsuario extends javax.swing.JDialog {
 
         txtPassword2.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
         txtPassword2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
-
-        setLayout(new java.awt.BorderLayout());
-
-        bg.setBackground(new java.awt.Color(245, 245, 245));
-        bg.setOpaque(true);
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 36)); // NOI18N
         jLabel1.setText("Registrarse");
@@ -166,23 +211,43 @@ public class CrearNuevoUsuario extends javax.swing.JDialog {
         jLabel5.setText("Rol");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Estudiante", "Maestro", "Coordinador" }));
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
             }
         });
 
+        txtNombre.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
+        txtNombre.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
+        jLabel6.setText("Nombre");
+
+        txtDepCar.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
+        txtDepCar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
+
+        lblDepCar.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
+        lblDepCar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDepCar.setText("?");
+
         bg.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         bg.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         bg.setLayer(txtCuenta, javax.swing.JLayeredPane.DEFAULT_LAYER);
         bg.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         bg.setLayer(txtPassword, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        bg.setLayer(jSeparator1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         bg.setLayer(jSeparator2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         bg.setLayer(button1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         bg.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        bg.setLayer(jSeparator4, javax.swing.JLayeredPane.DEFAULT_LAYER);
         bg.setLayer(jComboBox1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        bg.setLayer(txtNombre, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        bg.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        bg.setLayer(txtDepCar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        bg.setLayer(lblDepCar, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
         bg.setLayout(bgLayout);
@@ -191,61 +256,79 @@ public class CrearNuevoUsuario extends javax.swing.JDialog {
             .addGroup(bgLayout.createSequentialGroup()
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bgLayout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                            .addComponent(jSeparator1)
-                            .addComponent(txtPassword)
-                            .addComponent(jSeparator2)
-                            .addComponent(jSeparator4)))
-                    .addGroup(bgLayout.createSequentialGroup()
                         .addGap(91, 91, 91)
+                        .addComponent(jLabel1))
+                    .addGroup(bgLayout.createSequentialGroup()
                         .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1)))
+                            .addGroup(bgLayout.createSequentialGroup()
+                                .addGap(87, 87, 87)
+                                .addComponent(jLabel2))
+                            .addGroup(bgLayout.createSequentialGroup()
+                                .addGap(127, 127, 127)
+                                .addComponent(jLabel3))
+                            .addGroup(bgLayout.createSequentialGroup()
+                                .addGap(167, 167, 167)
+                                .addComponent(jLabel5))
+                            .addGroup(bgLayout.createSequentialGroup()
+                                .addGap(103, 103, 103)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(bgLayout.createSequentialGroup()
+                                .addGap(47, 47, 47)
+                                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblDepCar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                                    .addComponent(txtPassword)
+                                    .addComponent(txtNombre)
+                                    .addComponent(txtDepCar))))
+                        .addGap(62, 62, 62)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE)))
+                .addContainerGap(40, Short.MAX_VALUE))
+            .addGroup(bgLayout.createSequentialGroup()
+                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bgLayout.createSequentialGroup()
                         .addGap(131, 131, 131)
-                        .addComponent(jLabel3))
+                        .addComponent(jLabel6))
                     .addGroup(bgLayout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(bgLayout.createSequentialGroup()
-                        .addGap(171, 171, 171)
-                        .addComponent(jLabel5))
-                    .addGroup(bgLayout.createSequentialGroup()
-                        .addGap(107, 107, 107)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(55, Short.MAX_VALUE))
+                        .addGap(35, 35, 35)
+                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         bgLayout.setVerticalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(46, 46, 46)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
+                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(bgLayout.createSequentialGroup()
+                        .addGap(280, 280, 280)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(bgLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(29, 29, 29)
+                .addComponent(lblDepCar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5)
-                .addGap(18, 18, 18)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
-                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(txtDepCar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(23, 23, 23))
         );
 
-        add(bg, java.awt.BorderLayout.CENTER);
+        getContentPane().add(bg, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button1MouseClicked
@@ -263,6 +346,31 @@ public class CrearNuevoUsuario extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+        // TODO add your handling code here:
+        switch(jComboBox1.getSelectedIndex()){
+                case 0 -> {
+                    lblDepCar.setText("Carrera");
+                    
+                }
+                    
+                case 1 -> {
+                    lblDepCar.setText("Departamento");
+                }
+                case 2 -> {
+                    lblDepCar.setText("Departamento");
+                }
+                
+        }
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
+
+    private void closeMenu() {
+        if (animator.isRunning()) {
+            animator.stop();
+        }
+        show = false;
+        animator.start();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLayeredPane bg;
@@ -273,11 +381,13 @@ public class CrearNuevoUsuario extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JLabel lblDepCar;
     private javax.swing.JTextField txtCuenta;
+    private javax.swing.JPasswordField txtDepCar;
+    private javax.swing.JTextField txtNombre;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JPasswordField txtPassword1;
     private javax.swing.JPasswordField txtPassword2;

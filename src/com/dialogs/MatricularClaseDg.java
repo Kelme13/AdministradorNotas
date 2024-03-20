@@ -76,7 +76,7 @@ public class MatricularClaseDg extends javax.swing.JDialog {
         cbNoSeccion.setSelectedIndex(-1);
     }
 
-    public MatricularClaseDg(java.awt.Frame parent, boolean modal) {
+    public MatricularClaseDg(java.awt.Frame parent, boolean modal, String noCuenta) {
         super(parent, modal);
         initComponents();
         lbIcon.setIcon(IconFontSwing.buildIcon(GoogleMaterialDesignIcons.REPORT_PROBLEM, 60, new Color(254, 86, 96), new Color(113, 74, 67)));
@@ -105,7 +105,7 @@ public class MatricularClaseDg extends javax.swing.JDialog {
         animator.setAcceleration(0.5f);
 
         querys = new Querys();
-        disponibles = querys.selectTodasSeccionesDisponibles();
+        disponibles = querys.selectTodasSeccionesDisponibles(noCuenta);
 
         cbCodClase.removeAllItems();
         cbNoSeccion.removeAllItems();

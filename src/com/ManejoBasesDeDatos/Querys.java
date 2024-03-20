@@ -291,25 +291,36 @@ public class Querys {
                          SELECT Seccion.CodClase, Seccion.NoSeccion, COUNT(Cursando.NoCuentaEstudiante) as Estudiantes, MAX(Seccion.CantidadMax) as MaxEst
                          FROM Cursando, Seccion
                          WHERE Cursando.CodClase = Seccion.CodClase AND Cursando.NoSeccion = Seccion.NoSeccion
-                         AND Cursando.NoCuentaEstudiante <> ?
-                         GROUP BY Seccion.CodClase, Seccion.NoSeccion
+                         AND Cursando.CodClase <> ALL (SELECT CodClase 
+                         							  From Cursando
+                         							  Where NoCuentaEstudiante = ?)
+                         
+                         GROUP BY Seccion.CodClase, Seccion.NoSeccion 
                          HAVING COUNT(DISTINCT Cursando.NoCuentaEstudiante) < MAX(Seccion.CantidadMax)
                          
                          UNION
                          
                          (SELECT CodClase, NoSeccion, 0 as Estudiantes, 0 as MaxEst
                          FROM Seccion
+                         WHERE Seccion.CodClase <> ALL (SELECT CodClase 
+                         							  From Cursando
+                         							  Where NoCuentaEstudiante = ?)
                          
                          EXCEPT
                          
                          SELECT Seccion.CodClase, Seccion.NoSeccion, 0 as Estudiantes, 0 as MaxEst
                          From Seccion, Cursando
                          WHERE Cursando.CodClase = Seccion.CodClase AND Cursando.NoSeccion = Seccion.NoSeccion
-                         AND Cursando.NoCuentaEstudiante <> ?
-                         )""";
+                         AND Cursando.CodClase <> ALL (SELECT CodClase 
+                         							  From Cursando
+                         							  Where NoCuentaEstudiante = ?)
+                         )
+                         
+                         """;
             PreparedStatement pstmt = connection.prepareStatement(sql);
              pstmt.setString(1, NoCuenta);
              pstmt.setString(2, NoCuenta);
+             pstmt.setString(3, NoCuenta);
 
             ResultSet rs = pstmt.executeQuery();
 
@@ -714,6 +725,7 @@ public class Querys {
             pstmt.setString(2, password);
 
             int rowsAffected = pstmt.executeUpdate();
+            user = new Usuario();
             if (rowsAffected>0) {
                 pstmt.close();
                 user.setId(cuenta);
