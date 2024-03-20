@@ -292,7 +292,19 @@ public class Querys {
                          FROM Cursando, Seccion
                          WHERE Cursando.CodClase = Seccion.CodClase AND Cursando.NoSeccion = Seccion.NoSeccion
                          GROUP BY Seccion.CodClase, Seccion.NoSeccion 
-                         HAVING COUNT(DISTINCT Cursando.NoCuentaEstudiante) < MAX(Seccion.CantidadMax)""";
+                         HAVING COUNT(DISTINCT Cursando.NoCuentaEstudiante) < MAX(Seccion.CantidadMax)
+                         
+                         UNION
+                         
+                         (SELECT CodClase, NoSeccion, 0 as Estudiantes, 0 as MaxEst
+                         FROM Seccion
+                         
+                         EXCEPT
+                         
+                         SELECT Seccion.CodClase, Seccion.NoSeccion, 0 as Estudiantes, 0 as MaxEst
+                         From Seccion, Cursando
+                         WHERE Cursando.CodClase = Seccion.CodClase AND Cursando.NoSeccion = Seccion.NoSeccion
+                         )""";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             
 

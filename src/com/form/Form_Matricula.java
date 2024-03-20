@@ -4,13 +4,16 @@
  */
 package com.form;
 
+import com.ManejoBasesDeDatos.Querys;
 import com.dialogs.MatricularClaseDg;
+import com.dialogs.Message;
 import com.main.Login;
 import com.model.ModelSeccion;
 import com.roles.Usuario;
 import com.swing.icon.GoogleMaterialDesignIcons;
 import com.swing.icon.IconFontSwing;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Icon;
 
@@ -25,6 +28,8 @@ public class Form_Matricula extends javax.swing.JPanel {
      */
     private List<ModelSeccion> secciones;
     private Usuario user;
+    
+    private Querys querys;
     
     private void loadTabla() 
     {
@@ -46,6 +51,8 @@ public class Form_Matricula extends javax.swing.JPanel {
         
         this.user = user;
         tableSecciones.fixTable(jScrollPane2);
+        secciones = new ArrayList<>();
+        querys = new Querys();
     }
 
     /**
@@ -182,6 +189,18 @@ public class Form_Matricula extends javax.swing.JPanel {
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         // TODO add your handling code here:
+        Message msg = new Message(Login.getFrames()[0], true);
+        for(ModelSeccion sc : secciones)
+        {
+            boolean v = querys.insertEstudianteSeccion(sc.getClase().getCodigo(),
+                    sc.getSeccion(), user.getId());
+            if(v)
+                msg.showMessage("Se ha matriculado Correctamente");
+            else
+                msg.showMessage("Ocurrio algun problema");
+            
+        }
+        
     }//GEN-LAST:event_button1ActionPerformed
 
 
