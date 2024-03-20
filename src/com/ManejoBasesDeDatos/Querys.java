@@ -283,7 +283,7 @@ public class Querys {
         }
     }
     
-    public List<ModelSeccion> selectTodasSeccionesDisponibles() {
+    public List<ModelSeccion> selectTodasSeccionesDisponibles(String NoCuenta) {
         List<ModelSeccion> scs = null;
         try {
             connection = DriverManager.getConnection(url);
@@ -291,7 +291,8 @@ public class Querys {
                          SELECT Seccion.CodClase, Seccion.NoSeccion, COUNT(Cursando.NoCuentaEstudiante) as Estudiantes, MAX(Seccion.CantidadMax) as MaxEst
                          FROM Cursando, Seccion
                          WHERE Cursando.CodClase = Seccion.CodClase AND Cursando.NoSeccion = Seccion.NoSeccion
-                         GROUP BY Seccion.CodClase, Seccion.NoSeccion 
+                         AND Cursando.NoCuentaEstudiante <> ?
+                         GROUP BY Seccion.CodClase, Seccion.NoSeccion
                          HAVING COUNT(DISTINCT Cursando.NoCuentaEstudiante) < MAX(Seccion.CantidadMax)
                          
                          UNION
@@ -304,9 +305,11 @@ public class Querys {
                          SELECT Seccion.CodClase, Seccion.NoSeccion, 0 as Estudiantes, 0 as MaxEst
                          From Seccion, Cursando
                          WHERE Cursando.CodClase = Seccion.CodClase AND Cursando.NoSeccion = Seccion.NoSeccion
+                         AND Cursando.NoCuentaEstudiante <> ?
                          )""";
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            
+             pstmt.setString(1, NoCuenta);
+             pstmt.setString(2, NoCuenta);
 
             ResultSet rs = pstmt.executeQuery();
 
@@ -624,6 +627,32 @@ public class Querys {
             return null;
         }
     }
+    
+    public String getCoordinadorNamebyCuenta(String cuenta) {
+
+        try {
+            connection = DriverManager.getConnection(url);
+            Statement stmt = connection.createStatement();
+            String sql = "select Coor_Nombre from Coordinador where NoCuenta=" + cuenta;
+            ResultSet rs = stmt.executeQuery(sql);
+
+            String name = null;
+            if (rs.next()) {
+
+                name = rs.getString("Coor_Nombre");
+            } else {
+                return null;
+            }
+
+            rs.close();
+            return name;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
 
     public Usuario validarCredenciales(String cuenta, String password) {
         Usuario user = null;
@@ -664,6 +693,35 @@ public class Querys {
                 pstmt.close();
                 System.out.println("Credeciales invalidas.");
                 return user;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+    
+    public Usuario InsertCredenciales(String cuenta, String password) {
+        Usuario user = null;
+
+        try {
+            connection = DriverManager.getConnection(url);
+
+            String sql = "INSERT INTO Credenciales(NoCuenta,password) VALUES (?, ?)";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, cuenta);
+            pstmt.setString(2, password);
+
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected>0) {
+                pstmt.close();
+                user.setId(cuenta);
+                user.setContra(password);
+                return user;
+            } else {
+                pstmt.close();
+                System.out.println("No se ha insertado en Credenciales.");
             }
 
         } catch (Exception e) {
