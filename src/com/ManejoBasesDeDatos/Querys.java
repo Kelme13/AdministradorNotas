@@ -256,6 +256,46 @@ public class Querys {
             return null;
         }
     }
+    
+    public List<ModelSeccion> selectTodasSeccionesDisponibles() {
+        List<ModelSeccion> scs = null;
+        try {
+            connection = DriverManager.getConnection(url);
+            String sql = """
+                         SELECT Seccion.CodClase, Seccion.NoSeccion, COUNT(Cursando.NoCuentaEstudiante) as Estudiantes, MAX(Seccion.CantidadMax) as MaxEst
+                         FROM Cursando, Seccion
+                         WHERE Cursando.CodClase = Seccion.CodClase AND Cursando.NoSeccion = Seccion.NoSeccion
+                         GROUP BY Seccion.CodClase, Seccion.NoSeccion 
+                         HAVING COUNT(DISTINCT Cursando.NoCuentaEstudiante) < MAX(Seccion.CantidadMax)""";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            
+
+            ResultSet rs = pstmt.executeQuery();
+
+            String noSeccion,codClase;
+
+            scs = new ArrayList<>();
+            
+            ModelSeccion sc;
+            while (rs.next()) {
+                
+                codClase = rs.getString("CodClase");
+                noSeccion = rs.getString("NoSeccion");
+                
+                sc = getSeccionByNoSeccion(codClase, noSeccion);
+                
+                scs.add(sc);
+                
+            }
+
+            pstmt.close();
+            return scs;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public List<ModelSeccion> selectTodasSeccionesbyClase(String codClase) {
         List<ModelSeccion> scs = null;

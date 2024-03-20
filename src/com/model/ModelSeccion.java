@@ -165,6 +165,16 @@ public class ModelSeccion {
 
     }
     
+    public Object[] toRowTable() {
+        Icon icon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.CLASS, 60,
+                generarColor(), generarColor());
+
+        String c = estudiantes + " / " + max;
+        return new Object[]{new ModelProfile(icon, clase.getCodigo()),
+            clase.getNombre(), seccion, docente.getNombre()};
+
+    }
+    
     
     
     private ModelClass clase;
