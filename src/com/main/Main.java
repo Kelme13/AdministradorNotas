@@ -11,6 +11,7 @@ import com.event.EventShowPopupMenu;
 import com.form.Form1;
 import com.form.Form_Clase;
 import com.form.Form_Home;
+import com.form.Form_Matricula;
 import com.form.Form_TodasClases;
 import com.form.Form_VistaClase;
 import com.form.Form_VistaSeccion;
@@ -192,6 +193,12 @@ public class Main extends javax.swing.JDialog {
                             }
                         } else if (menuIndex == 3) {
                             cerrar();
+                        } else if(menuIndex == 2)
+                        {
+                            if(subMenuIndex == 0)
+                            {
+                                main.showForm(new Form_Matricula(usuario));
+                            }
                         }
                     }
                     case DOCENTE -> {

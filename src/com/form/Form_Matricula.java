@@ -4,8 +4,15 @@
  */
 package com.form;
 
+import com.dialogs.MatricularClaseDg;
+import com.main.Login;
 import com.model.ModelSeccion;
+import com.roles.Usuario;
+import com.swing.icon.GoogleMaterialDesignIcons;
+import com.swing.icon.IconFontSwing;
+import java.awt.Color;
 import java.util.List;
+import javax.swing.Icon;
 
 /**
  *
@@ -17,6 +24,7 @@ public class Form_Matricula extends javax.swing.JPanel {
      * Creates new form Form_Matricula
      */
     private List<ModelSeccion> secciones;
+    private Usuario user;
     
     private void loadTabla() 
     {
@@ -27,8 +35,17 @@ public class Form_Matricula extends javax.swing.JPanel {
         }
     }
     
-    public Form_Matricula() {
+    public Form_Matricula(Usuario user) {
         initComponents();
+         Icon icon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.LIBRARY_ADD, 40, Color.RED, Color.ORANGE);
+
+        btnAgregar.setIcon(icon);
+        
+        icon = IconFontSwing.buildIcon(GoogleMaterialDesignIcons.DELETE, 40, Color.RED, Color.BLACK);
+        btnEliminar.setIcon(icon);
+        
+        this.user = user;
+        tableSecciones.fixTable(jScrollPane2);
     }
 
     /**
@@ -47,6 +64,8 @@ public class Form_Matricula extends javax.swing.JPanel {
         btnEliminar = new com.raven.swing.Button();
         button1 = new com.raven.swing.Button();
 
+        setOpaque(false);
+
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 51, 255));
         jLabel1.setText("Matricular Clases");
@@ -58,6 +77,7 @@ public class Form_Matricula extends javax.swing.JPanel {
         });
 
         jScrollPane2.setBorder(null);
+        jScrollPane2.setOpaque(false);
 
         tableSecciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -138,6 +158,16 @@ public class Form_Matricula extends javax.swing.JPanel {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
 
+        MatricularClaseDg dg = new MatricularClaseDg(Login.getFrames()[0], true);
+        dg.showMessage();
+        
+        if(dg.isOk())
+        {
+            ModelSeccion sc = dg.getSeccion();
+            secciones.add(sc);
+            loadTabla();
+        }
+       
         
         
     }//GEN-LAST:event_btnAgregarActionPerformed

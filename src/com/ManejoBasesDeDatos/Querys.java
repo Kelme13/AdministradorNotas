@@ -268,7 +268,7 @@ public class Querys {
                 String maestro;
                 int max;
 
-                max = Integer.getInteger(rs.getString("CantidadMax"));
+                max = rs.getInt("CantidadMax");
                 maestro = rs.getString("Maestro");
 
                 sc = new ModelSeccion(noSeccion, getClaseByCodigo(codClase), 0, max, getDocenteByCuenta(maestro));

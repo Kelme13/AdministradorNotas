@@ -7,6 +7,7 @@ import com.model.ModelSeccion;
 import com.swing.icon.GoogleMaterialDesignIcons;
 import com.swing.icon.IconFontSwing;
 import java.awt.Color;
+import java.util.ArrayList;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
@@ -27,37 +28,53 @@ public class MatricularClaseDg extends javax.swing.JDialog {
     private final Animator animator;
     private boolean show = true;
     private ModelSeccion seccion;
-    
-    public ModelSeccion getSeccion()
-    {
+
+    private List<ModelSeccion> disponibles;
+
+    private Querys querys;
+
+    public ModelSeccion getSeccion() {
         return this.seccion;
     }
-    
-    private void loadCodClases() {
-        List<ModelClass> cls == null;
-        
-        cbCodClase.removeAllItems();
-        
-        for(ModelClass c : cls)
-        {
-            cbCodClase.addItem(c.getCodigo());
-        }
-    }
-    
-    private void loadSecciones(String codClase) {
-        
-        List<ModelSeccion> cls == null;
-        
-        cbCodClase.removeAllItems();
-        
 
-        for(ModelSeccion c : cls)
-        {
-            cbCodClase.addItem(c.getSeccion());
+    private void loadCodClases() {
+        List<String> cls = new ArrayList<>();
+
+        for (ModelSeccion sc : disponibles) {
+            if (!cls.contains(sc.getClase().getCodigo())) {
+                cls.add(sc.getClase().getCodigo());
+            }
         }
+
+        cbCodClase.removeAllItems();
+
+        for (String c : cls) {
+            cbCodClase.addItem(c);
+        }
+        
+        cbCodClase.setSelectedIndex(-1);
     }
-    
-    
+
+    private void loadSecciones(String codClase) {
+
+        List<String> scs = new ArrayList<>();
+
+        for (ModelSeccion sc : disponibles) {
+            if (sc.getClase().getCodigo().equals(codClase)) {
+                if (!scs.contains(sc.getSeccion())) {
+                    scs.add(sc.getSeccion());
+                }
+            }
+        }
+
+        cbNoSeccion.removeAllItems();
+
+        for (String s : scs) {
+            cbNoSeccion.addItem(s);
+        }
+        
+        cbNoSeccion.setSelectedIndex(-1);
+    }
 
     public MatricularClaseDg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -86,14 +103,19 @@ public class MatricularClaseDg extends javax.swing.JDialog {
         animator = new Animator(200, target);
         animator.setResolution(0);
         animator.setAcceleration(0.5f);
+
+        querys = new Querys();
+        disponibles = querys.selectTodasSeccionesDisponibles();
+
+        cbCodClase.removeAllItems();
+        cbNoSeccion.removeAllItems();
+        loadCodClases();
     }
 
     public void showMessage() {
         animator.start();
         setVisible(true);
     }
-    
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -107,7 +129,7 @@ public class MatricularClaseDg extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtUnidadesV = new javax.swing.JTextField();
+        txtDocente = new javax.swing.JTextField();
         cbNoSeccion = new javax.swing.JComboBox<>();
         cbCodClase = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
@@ -150,13 +172,13 @@ public class MatricularClaseDg extends javax.swing.JDialog {
         jLabel5.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
         jLabel5.setText("Docente");
 
-        txtUnidadesV.setEditable(false);
-        txtUnidadesV.setBackground(new java.awt.Color(245, 245, 245));
-        txtUnidadesV.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
-        txtUnidadesV.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
-        txtUnidadesV.addActionListener(new java.awt.event.ActionListener() {
+        txtDocente.setEditable(false);
+        txtDocente.setBackground(new java.awt.Color(245, 245, 245));
+        txtDocente.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
+        txtDocente.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
+        txtDocente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUnidadesVActionPerformed(evt);
+                txtDocenteActionPerformed(evt);
             }
         });
 
@@ -164,11 +186,21 @@ public class MatricularClaseDg extends javax.swing.JDialog {
         cbNoSeccion.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         cbNoSeccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbNoSeccion.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 0));
+        cbNoSeccion.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbNoSeccionItemStateChanged(evt);
+            }
+        });
 
         cbCodClase.setBackground(new java.awt.Color(245, 245, 245));
         cbCodClase.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         cbCodClase.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbCodClase.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 0));
+        cbCodClase.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbCodClaseItemStateChanged(evt);
+            }
+        });
         cbCodClase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbCodClaseActionPerformed(evt);
@@ -213,7 +245,7 @@ public class MatricularClaseDg extends javax.swing.JDialog {
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtUnidadesV, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel3)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -227,9 +259,9 @@ public class MatricularClaseDg extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(30, 30, 30)
-                    .addComponent(cbCodClase, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(33, Short.MAX_VALUE)))
+                    .addGap(26, 26, 26)
+                    .addComponent(cbCodClase, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(39, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -248,7 +280,7 @@ public class MatricularClaseDg extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtUnidadesV, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -259,7 +291,7 @@ public class MatricularClaseDg extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(145, 145, 145)
                     .addComponent(cbCodClase, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(431, Short.MAX_VALUE)))
+                    .addContainerGap(445, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -279,9 +311,16 @@ public class MatricularClaseDg extends javax.swing.JDialog {
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
         ok = true;
-        Querys querys = new Querys();
         
-        
+         for(ModelSeccion sc : disponibles)
+        {
+            if(sc.getSeccion().equals(cbNoSeccion.getSelectedItem()) && 
+                    sc.getClase().getCodigo().equals(cbCodClase.getSelectedItem()))
+            {
+                seccion = sc;
+                break;
+            }
+        }
 
         closeMenu();
     }//GEN-LAST:event_button2ActionPerformed
@@ -290,9 +329,9 @@ public class MatricularClaseDg extends javax.swing.JDialog {
         closeMenu();
     }//GEN-LAST:event_button1ActionPerformed
 
-    private void txtUnidadesVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUnidadesVActionPerformed
+    private void txtDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDocenteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtUnidadesVActionPerformed
+    }//GEN-LAST:event_txtDocenteActionPerformed
 
     private void txtNombreClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreClaseActionPerformed
         // TODO add your handling code here:
@@ -301,6 +340,36 @@ public class MatricularClaseDg extends javax.swing.JDialog {
     private void cbCodClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCodClaseActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbCodClaseActionPerformed
+
+    private void cbCodClaseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCodClaseItemStateChanged
+        // TODO add your handling code here:
+        
+        for(ModelSeccion sc : disponibles)
+        {
+            if(sc.getClase().getCodigo().equals(evt.getItem()))
+            {
+                txtNombreClase.setText(sc.getClase().getNombre());
+                break;
+            }
+        }
+        
+        loadSecciones((String)evt.getItem());
+
+    }//GEN-LAST:event_cbCodClaseItemStateChanged
+
+    private void cbNoSeccionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbNoSeccionItemStateChanged
+        // TODO add your handling code here:
+
+        for(ModelSeccion sc : disponibles)
+        {
+            if(sc.getSeccion().equals(evt.getItem()))
+            {
+                txtDocente.setText(sc.getDocente().getNombre());
+                break;
+            }
+        }
+
+    }//GEN-LAST:event_cbNoSeccionItemStateChanged
 
     private void closeMenu() {
         if (animator.isRunning()) {
@@ -322,7 +391,7 @@ public class MatricularClaseDg extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbIcon;
     private javax.swing.JLabel lbMessage;
+    private javax.swing.JTextField txtDocente;
     private javax.swing.JTextField txtNombreClase;
-    private javax.swing.JTextField txtUnidadesV;
     // End of variables declaration//GEN-END:variables
 }
