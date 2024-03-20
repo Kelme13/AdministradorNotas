@@ -125,6 +125,32 @@ public class Querys {
 
         return v;
     }
+    
+    public boolean DeleteClase(String codigo) {
+        boolean v = false;
+        try {
+            connection = DriverManager.getConnection(url);
+
+            if (getClaseByCodigo(codigo) != null) {
+                String sql = "DELETE FROM Clase WHERE CodClase = ?;";
+                PreparedStatement pstmt = connection.prepareStatement(sql);
+                pstmt.setString(1, codigo);
+                
+                int rs = pstmt.executeUpdate();
+
+                v = (rs > 0);
+
+                pstmt.close();
+                return v;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return v;
+    }
 
     public List<ModelClass> selectTodasClases() {
         List<ModelClass> cls = null;
