@@ -10,24 +10,35 @@ import com.roles.Usuario;
 import com.swing.icon.GoogleMaterialDesignIcons;
 import com.swing.icon.IconFontSwing;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.*;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
+import com.swing.icon.GoogleMaterialDesignIcons;
+
+
 /**
  *
  * @author lenovo
  */
-public class CrearNuevoUsuario extends javax.swing.JFrame implements java.beans.Customizer {
+public class CrearNuevoUsuario extends javax.swing.JDialog {
     
-    private Object bean;
+  
+
+    @Override
+    public void setLocationRelativeTo(Component c) {
+        super.setLocationRelativeTo(c); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
 
     /**
      * Creates new customizer CrearNuevoUsuario
      */
     public CrearNuevoUsuario() {
         initComponents();
+        this.setLocationRelativeTo(null);
         txtPassword.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -37,9 +48,7 @@ public class CrearNuevoUsuario extends javax.swing.JFrame implements java.beans.
         });
     }
     
-    public void setObject(Object bean) {
-        this.bean = bean;
-    }
+   
     private void NuevasCredenciales() {
         Querys querys = new Querys();
         char[] password = txtPassword.getPassword();
@@ -74,16 +83,12 @@ public class CrearNuevoUsuario extends javax.swing.JFrame implements java.beans.
                     nombre=querys.getCoordinadorNamebyCuenta(txtCuenta.getText());
                     break;
             }
+            System.out.println("EYYYYYY  ");
             user = querys.InsertCredenciales(txtCuenta.getText(),new String(password));
             user.setUsuario(nombre);
             
-            System.out.println("EYYYYYY  ");
+            
             this.setVisible(false);
-
-            Main main = new Main(user, this);
-
-            this.setVisible(true);
-
             System.out.println("Ya se cerro");
         }
     }
@@ -188,9 +193,9 @@ public class CrearNuevoUsuario extends javax.swing.JFrame implements java.beans.
                     .addGroup(bgLayout.createSequentialGroup()
                         .addGap(51, 51, 51)
                         .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtCuenta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                             .addComponent(jSeparator1)
+                            .addComponent(txtPassword)
                             .addComponent(jSeparator2)
                             .addComponent(jSeparator4)))
                     .addGroup(bgLayout.createSequentialGroup()
@@ -203,17 +208,14 @@ public class CrearNuevoUsuario extends javax.swing.JFrame implements java.beans.
                         .addComponent(jLabel3))
                     .addGroup(bgLayout.createSequentialGroup()
                         .addGap(43, 43, 43)
-                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(47, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(167, 167, 167))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(119, 119, 119))))
+                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(bgLayout.createSequentialGroup()
+                        .addGap(171, 171, 171)
+                        .addComponent(jLabel5))
+                    .addGroup(bgLayout.createSequentialGroup()
+                        .addGap(107, 107, 107)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         bgLayout.setVerticalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
